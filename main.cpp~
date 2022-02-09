@@ -91,16 +91,19 @@ int main(int, char**)
     io.IniFilename = NULL;
 
     Core &core = Core::getInstance();
-    core.pegaTransicao()[{1, 'a'}] = {2, 'b'};
-    core.pegaTransicao()[{1, 'b'}] = {2, 'c'};
+    vector<char> alfa {'a', 'b', 'c', ' ', 'x'};
+    core.adicionaAlfabeto(alfa);
+    core.pegaTransicao()[{1, 'a'}] = {2, 'x'};
+    core.pegaTransicao()[{1, ' '}] = {2, 'c'};
+    core.pegaFita().adiciona('i');
     core.pegaFita().adiciona('a');
-    core.pegaFita().adiciona('a');
-    core.pegaFita().adiciona('a');
+    core.pegaFita().adiciona(' ');
     core.pegaFita().adiciona('a');
     core.pegaFita().adiciona('a');
 
     std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
     std::cout << "Tamanho dos dados na fita " << core.pegaFita().size() << std::endl;
+    std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistenciaComAlfabeto() << std::endl;
 
     // Setup Dear ImGui style
     // ImGui::StyleColorsLight();
