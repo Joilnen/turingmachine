@@ -1,0 +1,14 @@
+*.sw*
+*~
+*.o
+*.d
+tags
+nat
+web
+latex.out
+*.aux
+*.idx
+*.log
+*.out
+doc/latex
+doc/html

@@ -1,0 +1,27 @@
+#ifndef CORE_H
+#define CORE_H
+
+#include "Fita.h"
+#include "Transicao.h"
+#include "Cabeca.h"
+
+class Core {
+    Fita fita;
+    Transicao transicao;
+    Cabeca cabeca;
+
+    Core() { }
+
+    public:
+        static Core &getInstance() {
+            static Core c;
+            return c;
+        }
+         
+        ~Core() { }
+
+};
+
+#endif
+
+
