@@ -2,6 +2,7 @@
 #define CORE_H
 
 #include <algorithm>
+#include <memory>
 #include "Fita.h"
 #include "Transicao.h"
 #include "Cabeca.h"
@@ -10,6 +11,7 @@ class Core {
     Fita<char> fita;
     vector<char> alfabeto;
     Transicao transicao;
+    vector<char>::iterator cabeca;
 
     Core() { Core(0x01); }
     Core(char si) : fita(si) { fita.impSimbIni(); }
@@ -23,7 +25,7 @@ class Core {
         ~Core() { }
         Transicao &pegaTransicao() { return transicao; }
         Fita<char> &pegaFita() { return fita; }
-        void adicionaAlfabeto(vector<char> &a) { alfabeto = a; }
+        void adicionaAlfabeto(vector<char> &a) { alfabeto = a; transicao.setaAlfabeto(a); }
         bool checaConsistenciaComAlfabeto() {
             for (auto &a : fita)
             {
@@ -42,6 +44,15 @@ class Core {
             }
 
             return true;
+        }
+        void setaMaximoEstado(unsigned int i) { transicao.setaMaxEstado(i); }
+        void setaEstadoInicial(unsigned int i) { transicao.setaEstadoInicial(i); }
+        void setaEstadosFinais(std::initializer_list<unsigned int> il) { transicao.setaEstadosFinais(il); }
+        void run() {
+            if (!checaConsistenciaComAlfabeto())
+                return;
+            cabeca = std::begin(fita);
+            cout << "* mt vai rodar soh n sei como ainda\n";
         }
 };
 

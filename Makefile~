@@ -16,6 +16,7 @@
 CC = emcc
 CXX = em++
 WEB_DIR = web
+NAT_DIR = nat
 EXE = $(WEB_DIR)/index.html
 IMGUI_DIR = ../..
 SOURCES = main.cpp turing_machine.cpp
@@ -23,7 +24,7 @@ SOURCES += $(IMGUI_DIR)/imgui.cpp $(IMGUI_DIR)/imgui_demo.cpp $(IMGUI_DIR)/imgui
 SOURCES += $(IMGUI_DIR)/backends/imgui_impl_sdl.cpp $(IMGUI_DIR)/backends/imgui_impl_opengl3.cpp
 OBJS = $(addsuffix .o, $(basename $(notdir $(SOURCES))))
 UNAME_S := $(shell uname -s)
-CPPFLAGS =
+CPPFLAGS = -std=c++17
 LDFLAGS =
 EMS =
 
@@ -88,4 +89,4 @@ $(EXE): $(OBJS) $(WEB_DIR)
 	$(CXX) -o $@ $(OBJS) $(LDFLAGS)
 
 clean:
-	rm -rf $(OBJS) $(WEB_DIR)
+	rm -rf $(OBJS) $(WEB_DIR) $(NAT_DIR)

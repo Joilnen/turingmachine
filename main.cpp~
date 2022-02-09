@@ -6,6 +6,7 @@
 // This is mostly the same code as the SDL2 + OpenGL3 example, simply with the modifications needed to run on Emscripten.
 // It is possible to combine both code into a single source file that will compile properly on Desktop and using Emscripten.
 // See https://github.com/ocornut/imgui/pull/2492 as an example on how to do just that.
+#include <map>
 
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
@@ -93,13 +94,14 @@ int main(int, char**)
     Core &core = Core::getInstance();
     vector<char> alfa {'a', 'b', 'c', ' ', 'x'};
     core.adicionaAlfabeto(alfa);
+    core.setaMaximoEstado(5);
+    core.setaEstadosFinais({4, 5});
     core.pegaTransicao()[{1, 'a'}] = {2, 'x'};
-    core.pegaTransicao()[{1, ' '}] = {2, 'c'};
-    core.pegaFita().adiciona('i');
-    core.pegaFita().adiciona('a');
+    core.pegaTransicao()[{2, 'x'}] = {2, 'x'};
+    core.pegaFita().adiciona('b');
     core.pegaFita().adiciona(' ');
-    core.pegaFita().adiciona('a');
-    core.pegaFita().adiciona('a');
+    core.pegaFita().adiciona('x');
+    core.pegaFita().adiciona('c');
 
     std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
     std::cout << "Tamanho dos dados na fita " << core.pegaFita().size() << std::endl;

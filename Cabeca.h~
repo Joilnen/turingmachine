@@ -5,11 +5,11 @@
 
 template <typename T> 
 class Cabeca : public std::vector<T>::iterator {
-    bool iniciado {false};
+    bool iniciada {false};
     public:
-        Cabeca() { }
+        Cabeca() : iniciada{c} { }
         ~Cabeca() { }
-        bool foiInciado() { return inciado; }
+        bool foiInciada() { return iniciada; }
 };
 
 #endif
