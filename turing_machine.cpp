@@ -453,10 +453,12 @@ void TuringMachine::RoundOutput() {
     }
 }
 
-static void MyShowMenuFile()
+void TuringMachine::MyShowMenuFile()
 {
     ImGui::MenuItem("Maquina de Turing", NULL, false, false);
-    if (ImGui::MenuItem("New")) {}
+    if (ImGui::MenuItem("Roda Core")) {
+        runCore();
+    }
     if (ImGui::MenuItem("Open", "Ctrl+O")) {}
     if (ImGui::BeginMenu("Open Recent"))
     {
@@ -529,6 +531,34 @@ static void MyShowMenuFile()
     if (ImGui::MenuItem("Quit", "Alt+F4")) {}
 }
 
+void TuringMachine::runCore()
+{
+    /**
+     * lembrar que core eh criado com simbolo inicial 0x01 por
+     * padrao usar getInstance('x') para mudar
+     */
+    Core &core = Core::getInstance();
+    //! vector<char> alfa {'a', 'b', 'c', ' ', 'x'}; 
+    core.adicionaAlfabeto({'a', 'b', 'c', ' ', 'x', 0x01});
+    core.setaMaximoEstado(5);
+    //! 0 eh o estado inicial padrao
+    core.setaEstadosFinais({4, 5});
+    core.pegaTransicao()[{1, 'a'}] = {2, 'x'};
+    core.pegaTransicao()[{2, 'x'}] = {5, 'x'};
+    core.pegaTransicao()[{2, 'b'}] = {5, mE};
+    core.pegaTransicao()[{0, 'b'}] = {5, mD};
+    core.pegaFita().adiciona('b');
+    core.pegaFita().adiciona(' ');
+    core.pegaFita().adiciona('x');
+    core.pegaFita().adiciona('c');
+
+    std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
+    std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
+    std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
+
+    core.run();
+}
+
 void TuringMachine::InputCleanBox() {
     static char inputValue[128] {""};
     static char textValue[128] {""};
@@ -547,7 +577,7 @@ void TuringMachine::InputCleanBox() {
     static float value = 0.5f;
     if (ImGui::BeginPopupContextItem("my popup"))
     {
-        MyShowMenuFile();
+        TuringMachine::MyShowMenuFile();
         ImGui::EndPopup();
     }
     ImGui::OpenPopupOnItemClick("my popup", ImGuiPopupFlags_MouseButtonRight);

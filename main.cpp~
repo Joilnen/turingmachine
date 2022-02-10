@@ -95,29 +95,6 @@ int main(int, char**)
     // For an Emscripten build we are disabling file-system access, so let's not attempt to do a fopen() of the imgui.ini file.
     // You may manually call LoadIniSettingsFromMemory() to load settings from your own storage.
 
-    /**
-     * lembrar que core eh criado com simbolo inicial 0x01 por
-     * padrao usar getInstance('x') para mudar
-     */
-    Core &core = Core::getInstance();
-    //! vector<char> alfa {'a', 'b', 'c', ' ', 'x'}; 
-    core.adicionaAlfabeto({'a', 'b', 'c', ' ', 'x', 0x01});
-    core.setaMaximoEstado(5);
-    //! 0 eh o estado inicial padrao
-    core.setaEstadosFinais({4, 5});
-    core.pegaTransicao()[{1, 'a'}] = {2, 'x'};
-    core.pegaTransicao()[{2, 'x'}] = {5, 'x'};
-    core.pegaTransicao()[{2, 'b'}] = {5, mE};
-    core.pegaTransicao()[{0, 'b'}] = {5, mE};
-    core.pegaFita().adiciona('b');
-    core.pegaFita().adiciona(' ');
-    core.pegaFita().adiciona('x');
-    core.pegaFita().adiciona('c');
-
-    std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
-    std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
-    std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
-
     // Setup Dear ImGui style
     // ImGui::StyleColorsLight();
 

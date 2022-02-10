@@ -48,6 +48,22 @@ class Transicao : public
                     finais[a] = true;
         }
 
+        pair<unsigned int, char> *processa(vector<char>::iterator &c, unsigned int &e)
+        {
+            for (auto &a : *this)
+            {
+                std::cout << a.first.first << std::endl;
+                if (e == a.first.first && *c == a.first.second)
+                    return &a.second;
+            }
+
+            return nullptr;
+        }
+
+        bool eh_final(unsigned int i)
+        {
+            return std::find(std::begin(finais), std::end(finais), i) != std::end(finais);
+        }
 };
 
 #endif
