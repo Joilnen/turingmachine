@@ -7,6 +7,8 @@
 #include "Transicao.h"
 #include "Cabeca.h"
 
+const  char mD {0x02}, mE {0x03};
+
 class Core {
     Fita<char> fita;
     vector<char> alfabeto;
@@ -26,7 +28,7 @@ class Core {
         Transicao &pegaTransicao() { return transicao; }
         Fita<char> &pegaFita() { return fita; }
         void adicionaAlfabeto(vector<char> &&a) { alfabeto = a; transicao.setaAlfabeto(alfabeto); }
-        bool checaConsistenciaComAlfabeto() {
+        bool checaConsistencia() {
             for (auto &a : fita)
             {
                 if (std::find(std::begin(alfabeto), std::end(alfabeto), a) == std::end(alfabeto))
@@ -38,12 +40,13 @@ class Core {
                 if (std::find(std::begin(alfabeto), std::end(alfabeto), a.first.second)
                         == std::end(alfabeto))
                     return false;
-                if (std::find(std::begin(alfabeto), std::end(alfabeto), a.second.second)
-                        == std::end(alfabeto))
-                    return false;
+                if (a.second.second != mE && a.second.second != 0x03 &&
+                    std::find(std::begin(alfabeto), std::end(alfabeto), a.second.second) ==
+                    std::end(alfabeto))
+                        return false;
                 if (a.first.first > transicao.pegaMaximoEstado() || 
                     a.second.first > transicao.pegaMaximoEstado())
-                    return false;
+                        return false;
             }
 
             return true;
@@ -52,7 +55,7 @@ class Core {
         void setaEstadoInicial(unsigned int i) { transicao.setaEstadoInicial(i); }
         void setaEstadosFinais(std::initializer_list<unsigned int> il) { transicao.setaEstadosFinais(il); }
         void run() {
-            if (!checaConsistenciaComAlfabeto())
+            if (!checaConsistencia())
                 return;
             cabeca = std::begin(fita);
             cout << "* mt vai rodar soh n sei como ainda\n";

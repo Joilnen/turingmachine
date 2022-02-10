@@ -44,7 +44,7 @@ class Transicao : public
         void setaAlfabeto(vector<char> &a) { alfa = &a; }
         void setaEstadosFinais(std::initializer_list<unsigned int> il) {
             for (auto &a : il)
-                if (a < max_estado + 1)
+                if (a >= 0 && a < max_estado + 1)
                     finais[a] = true;
         }
 

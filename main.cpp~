@@ -105,8 +105,10 @@ int main(int, char**)
     core.setaMaximoEstado(5);
     //! 0 eh o estado inicial padrao
     core.setaEstadosFinais({4, 5});
-    core.pegaTransicao()[{1, 'a'}] = {7, 'x'};
+    core.pegaTransicao()[{1, 'a'}] = {2, 'x'};
     core.pegaTransicao()[{2, 'x'}] = {5, 'x'};
+    core.pegaTransicao()[{2, 'b'}] = {5, mE};
+    core.pegaTransicao()[{0, 'b'}] = {5, mE};
     core.pegaFita().adiciona('b');
     core.pegaFita().adiciona(' ');
     core.pegaFita().adiciona('x');
@@ -114,7 +116,7 @@ int main(int, char**)
 
     std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
     std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
-    std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistenciaComAlfabeto() << std::endl;
+    std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
 
     // Setup Dear ImGui style
     // ImGui::StyleColorsLight();

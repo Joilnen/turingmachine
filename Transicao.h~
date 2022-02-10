@@ -14,6 +14,7 @@ class Transicao : public
     vector<bool> finais;
     unsigned int inicial, max_estado;
     vector<char> *alfa;
+    char sDireita {0x02}, sEsquerda {0x03};
     public:
         Transicao() { }
         ~Transicao() { }
@@ -23,7 +24,7 @@ class Transicao : public
             for(unsigned int i {0}; i < max_estado + 1; ++i)
                 finais.push_back(false);
         }
-        unsigned int pegaMaximoEstado()
+        unsigned int pegaMaximoEstado() { return max_estado; }
         void adicionaEstadoFinal(unsigned int i) {
             if (i < max_estado + 1)
                 finais[i] = true;
@@ -44,7 +45,7 @@ class Transicao : public
         void setaAlfabeto(vector<char> &a) { alfa = &a; }
         void setaEstadosFinais(std::initializer_list<unsigned int> il) {
             for (auto &a : il)
-                if (a < max_estado + 1)
+                if (a >= 0 && a < max_estado + 1)
                     finais[a] = true;
         }
 
