@@ -18,11 +18,12 @@ class Transicao : public
         Transicao() { }
         ~Transicao() { }
         void setaEstadoInicial(unsigned int i) { inicial = i; }
-        void setaMaxEstado(unsigned int i) {
+        void setaMaximoEstado(unsigned int i) {
             max_estado = i;
             for(unsigned int i {0}; i < max_estado + 1; ++i)
                 finais.push_back(false);
         }
+        unsigned int pegaMaximoEstado() { return max_estado; }
         void adicionaEstadoFinal(unsigned int i) {
             if (i < max_estado + 1)
                 finais[i] = true;

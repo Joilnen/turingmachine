@@ -51,8 +51,11 @@ int main(int, char**)
     // For the browser using Emscripten, we are going to use WebGL1 with GL ES2. See the Makefile. for requirement details.
     // It is very likely the generated file won't work in many browsers. Firefox is the only sure bet, but I have successfully
     // run this code on Chrome for Android for example.
+#ifdef EMSCRIPTEN
     const char* glsl_version = "#version 100";
-    //const char* glsl_version = "#version 300 es";
+#else
+    const char* glsl_version = "#version 300";
+#endif
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
@@ -79,9 +82,11 @@ int main(int, char**)
     ImGui::CreateContext();
     ImNodes::CreateContext();
     ImNodesIO& ion = ImNodes::GetIO();
-    ion.LinkDetachWithModifierClick.Modifier = &ImGui::GetIO().KeyCtrl;
     ImGuiIO& io = ImGui::GetIO();
+    // ion.LinkDetachWithModifierClick.Modifier = &ImGui::GetIO().KeyCtrl;
+    ion.LinkDetachWithModifierClick.Modifier = &io.KeyCtrl;
     // ImFont* pFont = io.Fonts->AddFontFromFileTTF("fonts/ProggyTiny.ttf", 10.0f);
+    io.IniFilename = NULL;
     (void)io;
     //
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
@@ -89,22 +94,26 @@ int main(int, char**)
 
     // For an Emscripten build we are disabling file-system access, so let's not attempt to do a fopen() of the imgui.ini file.
     // You may manually call LoadIniSettingsFromMemory() to load settings from your own storage.
-    io.IniFilename = NULL;
 
+    /**
+     * lembrar que core eh criado com simbolo inicial 0x01 por
+     * padrao usar getInstance('x') para mudar
+     */
     Core &core = Core::getInstance();
-    vector<char> alfa {'a', 'b', 'c', ' ', 'x'};
-    core.adicionaAlfabeto(alfa);
+    //! vector<char> alfa {'a', 'b', 'c', ' ', 'x'}; 
+    core.adicionaAlfabeto({'a', 'b', 'c', ' ', 'x', 0x01});
     core.setaMaximoEstado(5);
+    //! 0 eh o estado inicial padrao
     core.setaEstadosFinais({4, 5});
-    core.pegaTransicao()[{1, 'a'}] = {2, 'x'};
-    core.pegaTransicao()[{2, 'x'}] = {2, 'x'};
+    core.pegaTransicao()[{1, 'a'}] = {7, 'x'};
+    core.pegaTransicao()[{2, 'x'}] = {5, 'x'};
     core.pegaFita().adiciona('b');
     core.pegaFita().adiciona(' ');
     core.pegaFita().adiciona('x');
     core.pegaFita().adiciona('c');
 
     std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
-    std::cout << "Tamanho dos dados na fita " << core.pegaFita().size() << std::endl;
+    std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
     std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistenciaComAlfabeto() << std::endl;
 
     // Setup Dear ImGui style

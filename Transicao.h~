@@ -18,11 +18,12 @@ class Transicao : public
         Transicao() { }
         ~Transicao() { }
         void setaEstadoInicial(unsigned int i) { inicial = i; }
-        void setaMaxEstado(unsigned int i) {
+        void setaMaximoEstado(unsigned int i) {
             max_estado = i;
             for(unsigned int i {0}; i < max_estado + 1; ++i)
                 finais.push_back(false);
         }
+        unsigned int pegaMaximoEstado()
         void adicionaEstadoFinal(unsigned int i) {
             if (i < max_estado + 1)
                 finais[i] = true;
@@ -43,7 +44,7 @@ class Transicao : public
         void setaAlfabeto(vector<char> &a) { alfa = &a; }
         void setaEstadosFinais(std::initializer_list<unsigned int> il) {
             for (auto &a : il)
-                if (a < max_estado)
+                if (a < max_estado + 1)
                     finais[a] = true;
         }
 
