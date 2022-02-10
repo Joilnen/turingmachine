@@ -50,11 +50,7 @@ int main(int, char**)
     // For the browser using Emscripten, we are going to use WebGL1 with GL ES2. See the Makefile. for requirement details.
     // It is very likely the generated file won't work in many browsers. Firefox is the only sure bet, but I have successfully
     // run this code on Chrome for Android for example.
-#ifdef EMSCRIPTEN
     const char* glsl_version = "#version 100";
-#else
-    const char* glsl_version = "#version 300";
-#endif
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
