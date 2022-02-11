@@ -29,30 +29,44 @@ class Core {
             static Core c(ci);
             return c;
         }
-        Core(Core const&) = delete;
+        // Core(Core const&) = delete;
         void operator=(Core const&) = delete;
          
         Transicao &pegaTransicao() { return transicao; }
         Fita<char> &pegaFita() { return fita; }
         void adicionaAlfabeto(vector<char> &&a) { alfabeto = a; transicao.setaAlfabeto(alfabeto); }
         bool checaConsistencia() {
+            //! checa se fita esta no alfabeto
             for (auto &a : fita)
             {
                 if (std::find(std::begin(alfabeto), std::end(alfabeto), a) == std::end(alfabeto))
                     return false;
             }
 
+            //! checa se nao transicao (de para) do estado zero (inicial)
             for (auto &a : transicao)
             {
+                if (!a.first.first)
+                    break;
+                return false;
+            }
+
+            //! checa transicoes
+            for (auto &a : transicao)
+            {
+                //! transicao (de onde vem) contem apenas simolos do alfabeto ?
                 if (std::find(std::begin(alfabeto), std::end(alfabeto), a.first.second)
                         == std::end(alfabeto))
                     return false;
+                //! transicao (pra onde vai) contem apenas simolos do alfabeto ?
+                //! excluindo-se comandos de direita e esquerda
                 if (a.second.second != mE && a.second.second != mD &&
                     std::find(std::begin(alfabeto), std::end(alfabeto), a.second.second) ==
                     std::end(alfabeto))
                         return false;
-                if (a.first.first > transicao.pegaMaximoEstado() || 
-                    a.second.first > transicao.pegaMaximoEstado())
+                //! se estado estah dentro dos limites e se nao parte de estado final
+                if (a.first.first < 0 || a.first.first > transicao.pegaMaximoEstado() || 
+                    transicao.eh_final(a.first.first))
                         return false;
             }
 

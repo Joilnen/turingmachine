@@ -11,7 +11,7 @@ using namespace std;
 
 class Transicao : public 
         map<pair<unsigned int, char>, pair<unsigned int, char> > {
-    vector<bool> finais;
+    vector<unsigned int> finais;
     unsigned int inicial, max_estado;
     vector<char> *alfa;
     public:
@@ -43,9 +43,10 @@ class Transicao : public
         ****/
         void setaAlfabeto(vector<char> &a) { alfa = &a; }
         void setaEstadosFinais(std::initializer_list<unsigned int> il) {
+            finais.clear();
             for (auto &a : il)
                 if (a >= 0 && a < max_estado + 1)
-                    finais[a] = true;
+                    finais.push_back(a);
         }
 
         pair<unsigned int, char> *processa(vector<char>::iterator &c, unsigned int &e)
@@ -66,7 +67,7 @@ class Transicao : public
         }
         
         void limpa() {
-            this->clear()
+            this->clear();
         }
 };
 
