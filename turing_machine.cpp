@@ -562,7 +562,7 @@ void TuringMachine::runCore()
     //! 0 eh o estado inicial padrao
     core.adicionaAlfabeto({'c', 0x01});
     core.setaMaximoEstado(3);
-    core.pegaTransica().limpa();
+    core.pegaTransicao().limpa();
     core.pegaTransicao()[{0, 'c'}] = {1, 'c'};
     core.pegaTransicao()[{1, 'c'}] = {2, 'c'};
     core.pegaTransicao()[{2, 'c'}] = {3, mD};
