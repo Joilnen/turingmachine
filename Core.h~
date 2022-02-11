@@ -44,12 +44,14 @@ class Core {
             }
 
             //! checa se nao transicao (de para) do estado zero (inicial)
-            for (auto &a : transicao)
-            {
-                if (!a.first.first)
-                    break;
+            vector<unsigned int> tmp;
+            std::for_each((std::begin(transicao), std::end(transicao), [&tmp] (auto &a) {
+                tmp.push_back(a.first.first);
+            });
+            // for (auto &a : transicao)
+            //     tmp.push_back(a.first.first);
+            if (std::find(std::begin(tmp), std::end(tmp), 0) == std::end(tmp))
                 return false;
-            }
 
             //! checa transicoes
             for (auto &a : transicao)

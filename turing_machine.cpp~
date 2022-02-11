@@ -545,7 +545,7 @@ void TuringMachine::initCore()
     core.pegaTransicao()[{1, 'a'}] = {2, 'x'};
     core.pegaTransicao()[{2, 'x'}] = {5, 'x'};
     core.pegaTransicao()[{2, 'b'}] = {5, mE};
-    core.pegaTransicao()[{0, 'b'}] = {5, mD};
+     core.pegaTransicao()[{0, 'b'}] = {5, mD};
     core.pegaFita().adiciona('b');
     core.pegaFita().adiciona(' ');
     core.pegaFita().adiciona('x');
@@ -562,7 +562,7 @@ void TuringMachine::runCore()
     //! 0 eh o estado inicial padrao
     core.adicionaAlfabeto({'c', 0x01});
     core.setaMaximoEstado(3);
-    core.setaEstadosFinais({ 3});
+    core.setaEstadosFinais({3});
     core.pegaTransicao().limpa();
     core.pegaTransicao()[{0, 'c'}] = {1, 'c'};
     core.pegaTransicao()[{1, 'c'}] = {2, 'c'};
