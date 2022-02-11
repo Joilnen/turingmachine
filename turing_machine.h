@@ -62,6 +62,7 @@ class TuringMachine {
             return d;
         }
         void InputCleanBox();
+        void initCore();
         void runCore();
 };
 

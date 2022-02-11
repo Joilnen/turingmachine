@@ -52,7 +52,7 @@ class TuringMachine {
     void K1();
     void FuncaoF();
     void RoundOutput();
-    void MyShowMenuFile()
+    void MyShowMenuFile();
 
     public:
         void operator =(const TuringMachine &) = delete;
@@ -62,6 +62,7 @@ class TuringMachine {
             return d;
         }
         void InputCleanBox();
+        void Core();
         void runCore();
 };
 

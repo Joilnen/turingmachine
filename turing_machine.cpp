@@ -531,7 +531,7 @@ void TuringMachine::MyShowMenuFile()
     if (ImGui::MenuItem("Quit", "Alt+F4")) {}
 }
 
-void TuringMachine::runCore()
+void TuringMachine::initCore()
 {
     /**
      * lembrar que core eh criado com simbolo inicial 0x01 por
@@ -541,7 +541,6 @@ void TuringMachine::runCore()
     //! vector<char> alfa {'a', 'b', 'c', ' ', 'x'}; 
     core.adicionaAlfabeto({'a', 'b', 'c', ' ', 'x', 0x01});
     core.setaMaximoEstado(5);
-    //! 0 eh o estado inicial padrao
     core.setaEstadosFinais({4, 5});
     core.pegaTransicao()[{1, 'a'}] = {2, 'x'};
     core.pegaTransicao()[{2, 'x'}] = {5, 'x'};
@@ -551,6 +550,12 @@ void TuringMachine::runCore()
     core.pegaFita().adiciona(' ');
     core.pegaFita().adiciona('x');
     core.pegaFita().adiciona('c');
+}
+
+void TuringMachine::runCore()
+{
+    Core &core = Core::getInstance();
+    //! 0 eh o estado inicial padrao
 
     std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
     std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
