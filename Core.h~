@@ -45,7 +45,7 @@ class Core {
 
             //! checa se nao transicao (de para) do estado zero (inicial)
             vector<unsigned int> tmp;
-            std::for_each((std::begin(transicao), std::end(transicao), [&tmp] (auto &a) {
+            std::for_each(std::begin(transicao), std::end(transicao), [&tmp] (auto &a) {
                 tmp.push_back(a.first.first);
             });
             // for (auto &a : transicao)

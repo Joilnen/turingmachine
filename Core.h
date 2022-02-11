@@ -103,7 +103,7 @@ class Core {
 
             cout << "* mt vai rodar soh n sei como ainda\n";
 
-            return true;
+            return false;
         }
 };
 
