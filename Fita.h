@@ -22,6 +22,7 @@ class Fita : public std::vector<T> {
             this->push_back(c);
         }
         T &pegaSimbInicial() { return simbInicial; }
+        void limpa() { this->clear(); }
 };
 
 #endif

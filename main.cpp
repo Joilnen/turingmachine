@@ -117,6 +117,7 @@ int main(int, char**)
     //IM_ASSERT(font != NULL);
 #endif
     ****/
+    TuringMachine::GetInstance().initCore();
 
     // This function call won't return, and will engage in an infinite loop, processing events from the browser, and dispatching them.
 #ifdef EMSCRIPTEN
@@ -186,8 +187,6 @@ static void  main_loop(void* arg)
     Height = DM.h;
 
     static bool initialize {false};
-    TuringMachine::GetInstance().initCore();
-    TuringMachine::GetInstance().InputCleanBox();
 
     /****
     if (!initialize)
@@ -197,6 +196,7 @@ static void  main_loop(void* arg)
     }
     NodeEditorShow();
     ****/
+    TuringMachine::GetInstance().InputCleanBox();
 
     // Rendering
     ImGui::Render();

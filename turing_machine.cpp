@@ -537,7 +537,7 @@ void TuringMachine::initCore()
      * lembrar que core eh criado com simbolo inicial 0x01 por
      * padrao usar getInstance('x') para mudar
      */
-    Core &core = Core::getInstance();
+    auto core = Core::getInstance();
     //! vector<char> alfa {'a', 'b', 'c', ' ', 'x'}; 
     core.adicionaAlfabeto({'a', 'b', 'c', ' ', 'x', 0x01});
     core.setaMaximoEstado(5);
@@ -550,18 +550,34 @@ void TuringMachine::initCore()
     core.pegaFita().adiciona(' ');
     core.pegaFita().adiciona('x');
     core.pegaFita().adiciona('c');
+    std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
+    std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
+    std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
 }
 
 void TuringMachine::runCore()
 {
     Core &core = Core::getInstance();
-    //! 0 eh o estado inicial padrao
 
+    //! 0 eh o estado inicial padrao
+    core.adicionaAlfabeto({'c', 0x01});
+    core.setaMaximoEstado(3);
+    core.pegaTransica().limpa();
+    core.pegaTransicao()[{0, 'c'}] = {1, 'c'};
+    core.pegaTransicao()[{1, 'c'}] = {2, 'c'};
+    core.pegaTransicao()[{2, 'c'}] = {3, mD};
+    core.pegaFita().limpa();
+    core.pegaFita().adiciona('c');
+    core.pegaFita().adiciona('c');
+    core.pegaFita().adiciona('c');
+    core.pegaFita().adiciona('c');
+    core.pegaFita().adiciona('c');
+    core.pegaFita().adiciona('c');
     std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
     std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
     std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
 
-    core.run();
+    // core.run();
 }
 
 void TuringMachine::InputCleanBox() {

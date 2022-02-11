@@ -64,6 +64,10 @@ class Transicao : public
         {
             return std::find(std::begin(finais), std::end(finais), i) != std::end(finais);
         }
+        
+        void limpa() {
+            this->clear();
+        }
 };
 
 #endif

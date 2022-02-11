@@ -29,8 +29,9 @@ class Core {
             static Core c(ci);
             return c;
         }
+        // Core(Core const&) = delete;
+        void operator=(Core const&) = delete;
          
-        ~Core() { }
         Transicao &pegaTransicao() { return transicao; }
         Fita<char> &pegaFita() { return fita; }
         void adicionaAlfabeto(vector<char> &&a) { alfabeto = a; transicao.setaAlfabeto(alfabeto); }
