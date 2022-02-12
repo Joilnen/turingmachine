@@ -13,27 +13,8 @@
 #include <algorithm>
 #include <vector>
 
-enum class NodeTType {ALFA, ESTS, MAQ, FITA, PROG};
-
-struct NodeT
-{
-    int   id;
-    float value;
-    NodeTType type;
-
-    NodeT(const int i, const float v, const NodeTType t) : id(i), value(v), type(t) {}
-};
-
-struct LinkT
-{
-    int id;
-    int start_attr, end_attr;
-};
 
 class TuringMachine {
-    ImNodesEditorContext* context = nullptr;
-    std::vector<NodeT>     nodes;
-    std::vector<LinkT>     links;
     int                   current_id = 0;
     bool                  ntype[5];
 

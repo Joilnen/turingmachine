@@ -542,7 +542,7 @@ void TuringMachine::initCore()
     core.adicionaAlfabeto({'a', 'b', 'c', ' ', 'x', 0x01});
     core.setaMaximoEstado(5);
     core.setaEstadosFinais({4});
-    core.pegaTransicao()[{5, 'b'}] = {4, ''};
+    core.pegaTransicao()[{5, 'b'}] = {4, 'a'};
     // core.pegaTransicao()[{0, 'b'}] = {0, mE};
     core.pegaTransicao()[{0, 0x01}] = {5, mD};
     core.pegaFita().adiciona('b');
@@ -606,29 +606,6 @@ void TuringMachine::InputCleanBox() {
     if (ImGui::GetIO().MouseClicked[1])
         ImGui::OpenPopup("my popup");
 
-
-    ImNodes::BeginNodeEditor();
-        ImNodes::BeginNode(hardcoded_node_0);
-            ImGui::Dummy(ImVec2(0.0f, 0.0f));
-            ImGui::Text("Interessante");
-            ImGui::Button("B0");
-            ImNodes::BeginOutputAttribute(output_attr_id);
-                ImGui::Text("output pin");
-            ImNodes::EndOutputAttribute();
-        ImNodes::EndNode();
-
-        ImNodes::BeginNode(hardcoded_node_1);
-            ImGui::Dummy(ImVec2(0.0f, 0.0f));
-            ImGui::Text("Interessante");
-            ImGui::Button("B1");
-            ImNodes::BeginInputAttribute(input_attr_id);
-                ImGui::Text("input pin");
-            ImNodes::EndOutputAttribute();
-        ImNodes::EndNode();
-
-        ImNodes::Link(0, 0, 1);
-        ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_TopRight);
-    ImNodes::EndNodeEditor();
 
     ImGui::End();
 }

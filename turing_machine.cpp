@@ -606,30 +606,6 @@ void TuringMachine::InputCleanBox() {
     if (ImGui::GetIO().MouseClicked[1])
         ImGui::OpenPopup("my popup");
 
-
-    ImNodes::BeginNodeEditor();
-        ImNodes::BeginNode(hardcoded_node_0);
-            ImGui::Dummy(ImVec2(0.0f, 0.0f));
-            ImGui::Text("Interessante");
-            ImGui::Button("B0");
-            ImNodes::BeginOutputAttribute(output_attr_id);
-                ImGui::Text("output pin");
-            ImNodes::EndOutputAttribute();
-        ImNodes::EndNode();
-
-        ImNodes::BeginNode(hardcoded_node_1);
-            ImGui::Dummy(ImVec2(0.0f, 0.0f));
-            ImGui::Text("Interessante");
-            ImGui::Button("B1");
-            ImNodes::BeginInputAttribute(input_attr_id);
-                ImGui::Text("input pin");
-            ImNodes::EndOutputAttribute();
-        ImNodes::EndNode();
-
-        ImNodes::Link(0, 0, 1);
-        ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_TopRight);
-    ImNodes::EndNodeEditor();
-
     ImGui::End();
 }
 

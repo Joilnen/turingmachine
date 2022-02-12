@@ -20,8 +20,6 @@
     #include <SDL2/SDL_opengles2.h>
 #endif
 
-#include "imnodes.h"
-#include "node_editor.h"
 #include "turing_machine.h"
 
 /******* meus includes ********/
@@ -75,11 +73,8 @@ int main(int, char**)
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImNodes::CreateContext();
-    ImNodesIO& ion = ImNodes::GetIO();
     ImGuiIO& io = ImGui::GetIO();
     // ion.LinkDetachWithModifierClick.Modifier = &ImGui::GetIO().KeyCtrl;
-    ion.LinkDetachWithModifierClick.Modifier = &io.KeyCtrl;
     // ImFont* pFont = io.Fonts->AddFontFromFileTTF("fonts/ProggyTiny.ttf", 10.0f);
     io.IniFilename = NULL;
     (void)io;
