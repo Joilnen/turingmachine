@@ -582,7 +582,8 @@ void TuringMachine::runCore()
 }
 
 void TuringMachine::InputCleanBox() {
-    static char inputValue[128] {""};
+    static char entradaAlfabeto[128] {""};
+    static char entradaFita[128] {""};
     static char textValue[128] {""};
     std::string inS, outS;
     // ImGui::SetNextWindowSize(ImVec2(810, 600));
@@ -596,7 +597,9 @@ void TuringMachine::InputCleanBox() {
 
     bool b {true};
     ImGui::ShowDemoWindow(&b);
-    static float value = 0.5f;
+    ImGui::InputTextWithHint("alfabeto", "entre com alfanumerio", entradaAlfabeto, IM_ARRAYSIZE(entradaAlfabeto));
+    ImGui::InputTextWithHint("fita", "entre com alfanumerio", entradaFita, IM_ARRAYSIZE(entradaFita));
+    /****
     if (ImGui::BeginPopupContextItem("my popup"))
     {
         TuringMachine::MyShowMenuFile();
@@ -605,6 +608,7 @@ void TuringMachine::InputCleanBox() {
     ImGui::OpenPopupOnItemClick("my popup", ImGuiPopupFlags_MouseButtonRight);
     if (ImGui::GetIO().MouseClicked[1])
         ImGui::OpenPopup("my popup");
+    ****/
 
     ImGui::End();
 }

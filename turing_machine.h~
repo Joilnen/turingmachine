@@ -15,7 +15,6 @@
 
 
 class TuringMachine {
-    std::vector<LinkT>     links;
     int                   current_id = 0;
     bool                  ntype[5];
 
