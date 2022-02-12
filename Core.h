@@ -49,8 +49,6 @@ class Core {
             std::for_each(std::begin(transicao), std::end(transicao), [&tmp] (auto &a) {
                 tmp.push_back(a.first.first);
             });
-            // for (auto &a : transicao)
-            //     tmp.push_back(a.first.first);
             if (std::find(std::begin(tmp), std::end(tmp), 0) == std::end(tmp))
                 return false;
 
@@ -75,6 +73,7 @@ class Core {
 
             return true;
         }
+        unsigned int pegaEstadoAtual() { return estado; }
         void setaMaximoEstado(unsigned int i) { transicao.setaMaximoEstado(i); }
         void setaEstadoInicial(unsigned int i) { transicao.setaEstadoInicial(i); }
         void setaEstadosFinais(std::initializer_list<unsigned int> il) { transicao.setaEstadosFinais(il); }
@@ -99,19 +98,19 @@ class Core {
                 if (!r)
                     return false;
 
-                if (transicao.eh_final(estado))
-                    return true;
-
                 estado = r->first;
                 if (r->second != mE && r->second !=mD)
                     *cabeca = r->second;
 
-                if (*cabeca == mD) ++cabeca;
-                if (*cabeca == mE) --cabeca;
+                if (transicao.eh_final(estado))
+                    return true;
+
+                if (r->second == mD) ++cabeca;
+                if (r->second == mE) --cabeca;
 
                 cout << "rfirst " << r->first << " rsecond " << static_cast<int>(r->second) << endl;
                 cout << "*cabeca " << static_cast<int>(*cabeca)  << endl;
-                getc(stdin);
+                // getc(stdin);
             }
 
             cout << "* mt vai rodar soh n sei como ainda\n";

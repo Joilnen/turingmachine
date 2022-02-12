@@ -542,16 +542,17 @@ void TuringMachine::initCore()
     core.adicionaAlfabeto({'a', 'b', 'c', ' ', 'x', 0x01});
     core.setaMaximoEstado(5);
     core.setaEstadosFinais({4});
-    core.pegaTransicao()[{5, 'b'}] = {4, 'x'};
-    core.pegaTransicao()[{0, 'b'}] = {5, mD};
-    core.pegaTransicao()[{0, 0x01}] = {0, mD};
+    core.pegaTransicao()[{5, 'b'}] = {4, 'a'};
+    // core.pegaTransicao()[{0, 'b'}] = {0, mE};
+    core.pegaTransicao()[{0, 0x01}] = {5, mD};
     core.pegaFita().adiciona('b');
     core.pegaFita().adiciona('b');
     std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
     std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
     std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
-
-    core.run();
+    std::cout << "Estado atual antes do run " <<  core.pegaEstadoAtual() << std::endl;
+    std::cout << "Aceita ? " << std::boolalpha << core.run() << std::endl;
+    std::cout << "Estado final depois do run " <<  core.pegaEstadoAtual() << std::endl;
 }
 
 void TuringMachine::runCore()
