@@ -541,18 +541,17 @@ void TuringMachine::initCore()
     //! vector<char> alfa {'a', 'b', 'c', ' ', 'x'}; 
     core.adicionaAlfabeto({'a', 'b', 'c', ' ', 'x', 0x01});
     core.setaMaximoEstado(5);
-    core.setaEstadosFinais({4, 5});
-    core.pegaTransicao()[{1, 'a'}] = {2, 'x'};
-    core.pegaTransicao()[{2, 'x'}] = {5, 'x'};
-    core.pegaTransicao()[{2, 'b'}] = {5, mE};
+    core.setaEstadosFinais({4});
+    core.pegaTransicao()[{5, 'b'}] = {4, 'x'};
     core.pegaTransicao()[{0, 'b'}] = {5, mD};
+    core.pegaTransicao()[{0, 0x01}] = {0, mD};
     core.pegaFita().adiciona('b');
-    core.pegaFita().adiciona(' ');
-    core.pegaFita().adiciona('x');
-    core.pegaFita().adiciona('c');
+    core.pegaFita().adiciona('b');
     std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
     std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
     std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
+
+    core.run();
 }
 
 void TuringMachine::runCore()
@@ -578,7 +577,7 @@ void TuringMachine::runCore()
     std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
     std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
 
-    // core.run();
+    core.run();
 }
 
 void TuringMachine::InputCleanBox() {

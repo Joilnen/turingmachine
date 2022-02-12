@@ -3,11 +3,12 @@
 
 #include <algorithm>
 #include <memory>
+#include <cstdio>
 #include "Fita.h"
 #include "Transicao.h"
 #include "Cabeca.h"
 
-const  char mD {0x02}, mE {0x03};
+const char mD {0x02}, mE {0x03};
 
 class Core {
     Fita<char> fita;
@@ -85,6 +86,13 @@ class Core {
                 return false;
 
             cabeca = std::begin(fita);
+            cout << "Valor cabeca\n";
+            for (auto a = cabeca; a != std::end(fita); ++a) {
+                cout << static_cast<int>(*a) << " "
+                     << *a << " ";
+            }
+            cout << "\n";
+
             while (cabeca != std::end(fita))
             {
                 auto r { transicao.processa(cabeca, estado) };
@@ -95,10 +103,15 @@ class Core {
                     return true;
 
                 estado = r->first;
-                *cabeca = r->second;
+                if (r->second != mE && r->second !=mD)
+                    *cabeca = r->second;
 
                 if (*cabeca == mD) ++cabeca;
                 if (*cabeca == mE) --cabeca;
+
+                cout << "rfirst " << r->first << " rsecond " << static_cast<int>(r->second) << endl;
+                cout << "*cabeca " << static_cast<int>(*cabeca)  << endl;
+                getc(stdin);
             }
 
             cout << "* mt vai rodar soh n sei como ainda\n";
