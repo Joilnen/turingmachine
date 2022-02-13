@@ -585,6 +585,8 @@ void TuringMachine::InputCleanBox() {
     static char entradaAlfabeto[128] {""};
     static char entradaFita[128] {""};
     static char textValue[128] {""};
+    static char simbIncial[2] {""};
+    static int maximoEstado {0};
     std::string inS, outS;
     // ImGui::SetNextWindowSize(ImVec2(810, 600));
     ImGui::SetNextWindowSize(ImVec2(1250, 620));
@@ -594,11 +596,24 @@ void TuringMachine::InputCleanBox() {
     const int hardcoded_node_1 = 1;
     const int output_attr_id = 0;
     const int input_attr_id = 1;
+    unsigned int count {0};
 
     bool b {true};
     ImGui::ShowDemoWindow(&b);
-    ImGui::InputTextWithHint("alfabeto", "entre com alfanumerio", entradaAlfabeto, IM_ARRAYSIZE(entradaAlfabeto));
-    ImGui::InputTextWithHint("fita", "entre com alfanumerio", entradaFita, IM_ARRAYSIZE(entradaFita));
+    ImGui::InputTextWithHint("fita", "entre com alfanumérico", entradaFita, IM_ARRAYSIZE(entradaFita));
+    ImGui::Text("0x01"); ImGui::SameLine(); ImGui::Text("símbolo incial");
+    ImGui::InputTextWithHint("alfabeto", "entre com alfanumérico", entradaAlfabeto, IM_ARRAYSIZE(entradaAlfabeto));
+    ImGui::InputInt("estado máximo", &maximoEstado);
+    if (maximoEstado < 0)
+        maximoEstado = 0;
+
+    while (count < maximoEstado + 1)
+    {
+        ImGui::Button("q"); ImGui::SameLine();
+        ++count;
+    }
+
+    ImGui::Text("transições");
     /****
     if (ImGui::BeginPopupContextItem("my popup"))
     {

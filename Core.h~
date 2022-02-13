@@ -105,7 +105,6 @@ class Core {
                 if (transicao.eh_final(estado))
                     return true;
 
-
                 if (r->second == mD) ++cabeca;
                 if (r->second == mE) --cabeca;
 
