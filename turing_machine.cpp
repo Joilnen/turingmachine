@@ -2,6 +2,8 @@
 #include "imgui.h"
 #include "turing_machine.h"
 #include "Core.h"
+#include "TempData.h"
+ 
 
 extern unsigned int Width, Height;
 
@@ -208,7 +210,11 @@ void TuringMachine::InputCleanBox() {
         ImGui::Text(ss.str().c_str());
     });
 
-    ImGui::Button("Checa Consistência");
+    if (ImGui::Button("Checa Consistência"))
+    {
+        TempData t;
+        t.fita.insert(entradaFita);
+    }
     ImGui::Button("Executa");
     /****
     if (ImGui::BeginPopupContextItem("my popup"))
