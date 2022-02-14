@@ -199,8 +199,17 @@ void TuringMachine::InputCleanBox() {
         ImGui::Button(ss.str().c_str()); ImGui::SameLine();
         ss.clear(); ss.flush(); ss.str(std::string());
         ss << ":" << a.first.second;
+        ImGui::Text(ss.str().c_str()); ImGui::SameLine();
+        ss.clear(); ss.flush(); ss.str(std::string());
+        ss << a.second.first;
+        ImGui::Button(ss.str().c_str()); ImGui::SameLine();
+        ss.clear(); ss.flush(); ss.str(std::string());
+        ss << ":" << a.second.second;
         ImGui::Text(ss.str().c_str());
     });
+
+    ImGui::Button("Checa Consistência");
+    ImGui::Button("Executa");
     /****
     if (ImGui::BeginPopupContextItem("my popup"))
     {
