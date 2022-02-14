@@ -1,6 +1,5 @@
 #include <sstream>
 #include "imgui.h"
-#include "imnodes.h"
 #include "turing_machine.h"
 #include "Core.h"
 
@@ -144,7 +143,13 @@ void TuringMachine::InputCleanBox() {
     static int ntransicoes {0};
     static vector<unsigned int> estados;
     static map <pair<unsigned int, char>, pair<unsigned int, char> > transicoes;
+    static char simboloDe[8] {""};
+    static char simboloPara[8] {""};
+    static char estadoDe[8] {""};
+    static char estadoPara[8] {""};
     std::string inS, outS;
+
+
     // ImGui::SetNextWindowSize(ImVec2(810, 600));
     ImGui::SetNextWindowSize(ImVec2(1250, 620));
     ImGui::SetNextWindowPos(ImVec2(50, Height / 2 - ImGui::GetWindowHeight() / 1.1));
@@ -180,108 +185,21 @@ void TuringMachine::InputCleanBox() {
     if (ntransicoes < 0)
         ntransicoes = 0;
 
-    static int idx {0};
-    if (ImGui::BeginCombo("estado de", to_string(estados[idx]).c_str(), 0))
-    {
-        for (int n = 0; n < estados.size(); n++)
-        {
-            const bool is_selected = (idx == n);
-            if (ImGui::Selectable(to_string(estados[n]).c_str(), is_selected))
-                idx = n;
+    ImGui::InputText("estado de", estadoDe, IM_ARRAYSIZE(estadoDe)); // ImGui::SameLine();
+    ImGui::InputText("símbolo de", simboloDe, IM_ARRAYSIZE(simboloDe));//  ImGui::SameLine();
+    ImGui::InputText("estado para", estadoPara, IM_ARRAYSIZE(estadoPara));//  ImGui::SameLine();
+    ImGui::InputText("símbolo para", simboloPara, IM_ARRAYSIZE(simboloPara));
 
-            // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-            if (is_selected)
-                ImGui::SetItemDefaultFocus();
-        }
-        ImGui::EndCombo();
-    }
-
-    idx = 0;
-    stringstream ss;
-    ss << entradaAlfabeto[idx];
-    if (ImGui::BeginCombo("símbolo de", ss.str().c_str(), 0))
-    {
-        for (int n = 0; n < strlen(entradaAlfabeto); n++)
-        {
-            const bool is_selected = (idx == n);
-            ss.flush();
-            ss.clear();
-            ss.str(std::string());
-            ss << entradaAlfabeto[n];
-            if (ImGui::Selectable(ss.str().c_str(), is_selected))
-                idx = n;
-
-            // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-            if (is_selected)
-                ImGui::SetItemDefaultFocus();
-        }
-        ImGui::EndCombo();
-    }
-
-    idx = 0;
-    if (ImGui::BeginCombo("estado para", to_string(estados[idx]).c_str(), 0))
-    {
-        for (int n = 0; n < estados.size(); n++)
-        {
-            const bool is_selected = (idx == n);
-            if (ImGui::Selectable(to_string(estados[n]).c_str(), is_selected))
-                idx = n;
-
-            // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-            if (is_selected)
-                ImGui::SetItemDefaultFocus();
-        }
-        ImGui::EndCombo();
-    }
-
-    /****
-
-        static int item_current_idx = 0; // Here we store our selection data as an index.
-        const char* combo_preview_value = items[item_current_idx];  // Pass in the preview value visible before opening the combo (it could be anything)
-        if (ImGui::BeginCombo("combo 1", combo_preview_value, flags))
-        {
-            for (int n = 0; n < IM_ARRAYSIZE(items); n++)
-            {
-                const bool is_selected = (item_current_idx == n);
-                if (ImGui::Selectable(items[n], is_selected))
-                    item_current_idx = n;
-
-                // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-                if (is_selected)
-                    ImGui::SetItemDefaultFocus();
-            }
-            ImGui::EndCombo();
-        }
-    ****/
-
-    ss.flush();
-    ss.clear();
-    ss.str(std::string());
-    idx = 0;
-    ss << entradaAlfabeto[idx];
-    if (ImGui::BeginCombo("símbolo para", ss.str().c_str(), 0))
-    {
-        for (int n = 0; n < strlen(entradaAlfabeto); n++)
-        {
-            const bool is_selected = (idx == n);
-            ss.flush();
-            ss.clear();
-            ss.str(std::string());
-            ss << entradaAlfabeto[n];
-            if (ImGui::Selectable(ss.str().c_str(), is_selected))
-                idx = n;
-
-            // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-            if (is_selected)
-                ImGui::SetItemDefaultFocus();
-        }
-        ImGui::EndCombo();
-    }
     ImGui::InputInt("adiciona transições", &ntransicoes);
+    if (transicoes.size() != ntransicoes)
+        transicoes[pair<unsigned int, char>(atoi(estadoDe), simboloDe[0])] = pair<unsigned int, char> (atoi(estadoPara), simboloPara[0]);
     for_each(begin(transicoes), end(transicoes), [](auto &a) {
         stringstream ss;
-        ss << "e" << a.first.first;
+        ss << a.first.first;
         ImGui::Button(ss.str().c_str()); ImGui::SameLine();
+        ss.clear(); ss.flush(); ss.str(std::string());
+        ss << ":" << a.first.second;
+        ImGui::Text(ss.str().c_str());
     });
     /****
     if (ImGui::BeginPopupContextItem("my popup"))
