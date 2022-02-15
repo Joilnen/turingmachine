@@ -77,6 +77,8 @@ class Core {
         void setaMaximoEstado(unsigned int i) { transicao.setaMaximoEstado(i); }
         void setaEstadoInicial(unsigned int i) { transicao.setaEstadoInicial(i); }
         void setaEstadosFinais(std::initializer_list<unsigned int> il) { transicao.setaEstadosFinais(il); }
+        void setaEstadosFinais(const vector<unsigned int> &il) { transicao.setaEstadosFinais(il); }
+        // void setaEstadosFinais(vector<unsigned int> &il) { transicao.setaEstadosFinais(il); }
         bool run() {
             if (!checaConsistencia())
                 return false;
@@ -117,6 +119,9 @@ class Core {
 
             return false;
         }
+
+        void setaSimboloInicial(const char c) { fita[0] = c; }
+
 };
 
 #endif

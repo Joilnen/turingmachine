@@ -1,9 +1,10 @@
+#include <fstream>
 #include <sstream>
+#include <set>
 #include "imgui.h"
 #include "turing_machine.h"
 #include "Core.h"
 #include "TempData.h"
- 
 
 extern unsigned int Width, Height;
 
@@ -86,6 +87,28 @@ void TuringMachine::MyShowMenuFile()
     if (ImGui::MenuItem("Quit", "Alt+F4")) {}
 }
 
+void TuringMachine::checaConsistencia(TempData &t)
+{
+    auto core = Core::getInstance();
+    //! vector<char> alfa {'a', 'b', 'c', ' ', 'x'}; 
+    core.adicionaAlfabeto(move(t.alfabeto));
+    core.setaMaximoEstado(t.maximoEstado);
+    vector<unsigned int> f;
+    // for (auto &a : t.finais) f.push_back(a); 
+    // core.setaEstadosFinais(forward(f));
+    core.pegaTransicao()[{5, 'b'}] = {4, 'a'};
+    // core.pegaTransicao()[{0, 'b'}] = {0, mE};
+    core.pegaTransicao()[{0, 0x01}] = {5, mD};
+    core.pegaFita().adiciona('b');
+    core.pegaFita().adiciona('b');
+    std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
+    std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
+    std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
+    std::cout << "Estado atual antes do run " <<  core.pegaEstadoAtual() << std::endl;
+    std::cout << "Aceita ? " << std::boolalpha << core.run() << std::endl;
+    std::cout << "Estado final depois do run " <<  core.pegaEstadoAtual() << std::endl;
+}
+
 void TuringMachine::initCore()
 {
     /**
@@ -144,7 +167,8 @@ void TuringMachine::InputCleanBox() {
     static int maximoEstado {0};
     static int ntransicoes {0};
     static vector<unsigned int> estados;
-    static map <pair<unsigned int, char>, pair<unsigned int, char> > transicoes;
+    static set<unsigned int> finais;
+    static Transicao transicoes;
     static char simboloDe[8] {""};
     static char simboloPara[8] {""};
     static char estadoDe[8] {""};
@@ -155,7 +179,7 @@ void TuringMachine::InputCleanBox() {
     // ImGui::SetNextWindowSize(ImVec2(810, 600));
     ImGui::SetNextWindowSize(ImVec2(1250, 620));
     ImGui::SetNextWindowPos(ImVec2(50, Height / 2 - ImGui::GetWindowHeight() / 1.1));
-    ImGui::Begin("Papadimitriou - joilnen e larissa", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+    ImGui::Begin("Papadimitriou - joilnen", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
     const int hardcoded_node_0 = 0;
     const int hardcoded_node_1 = 1;
     const int output_attr_id = 0;
@@ -180,9 +204,20 @@ void TuringMachine::InputCleanBox() {
     for_each(begin(estados), end(estados), [](auto &a) {
         stringstream ss;
         ss << "e" << a;
-        ImGui::Button(ss.str().c_str()); ImGui::SameLine();
+        if (ImGui::Button(ss.str().c_str())) {
+            if (finais.find(a) == end(finais)) finais.insert(a);
+            else finais.erase(a);
+        }
+        ImGui::SameLine();
     });
     ImGui::Text("estados");
+
+    for_each(begin(finais), end(finais), [](auto &a) {
+        stringstream ss;
+        ss << "e" << a;
+        ImGui::Text(ss.str().c_str(), ss.str().size()); ImGui::SameLine();
+    });
+    ImGui::Text("finais");
 
     if (ntransicoes < 0)
         ntransicoes = 0;
@@ -201,19 +236,27 @@ void TuringMachine::InputCleanBox() {
         ImGui::Button(ss.str().c_str()); ImGui::SameLine();
         ss.clear(); ss.flush(); ss.str(std::string());
         ss << ":" << a.first.second;
-        ImGui::Text(ss.str().c_str()); ImGui::SameLine();
+        ImGui::Text(ss.str().c_str(), ss.str().size()); ImGui::SameLine();
         ss.clear(); ss.flush(); ss.str(std::string());
         ss << a.second.first;
         ImGui::Button(ss.str().c_str()); ImGui::SameLine();
         ss.clear(); ss.flush(); ss.str(std::string());
         ss << ":" << a.second.second;
-        ImGui::Text(ss.str().c_str());
+        ImGui::Text(ss.str().c_str(), ss.str().size());
     });
 
     if (ImGui::Button("Checa Consistência"))
     {
         TempData t;
-        t.fita.insert(entradaFita)
+        for (int count = 0; entradaFita[count]; count++)
+            t.fita.push_back(entradaFita[count]);
+        for (int count = 0; entradaAlfabeto[count]; count++)
+            t.alfabeto.push_back(entradaAlfabeto[count]);
+        t.transicoes = &transicoes;
+        t.simbIncial = 0x01;
+        t.estados = &estados;
+        t.maximoEstado = maximoEstado;
+        t.finais = &finais;
     }
     ImGui::Button("Executa");
     /****
@@ -230,4 +273,50 @@ void TuringMachine::InputCleanBox() {
     ImGui::End();
 }
 
+void TuringMachine::init()
+{
+    ifstream ifs;
+    string line;
+    json j;
+    ifs.open("maquina.json");
+    if (ifs.is_open()) {
+        while (getline(ifs, line)) {
+            cout << line << '\n';
+            buffer << line << '\n';
+        }
+        ifs.close();
+    }
+    else
+        cerr << "* erro ao abrir arquivo maquina.json\n"; 
+
+    maquina_config = json::parse(buffer.str());
+    for (auto &[k, v] : j.items())
+        cout << "key " << k << " value " << v << endl;
+}
+
+void TuringMachine::run()
+{
+    auto core = Core::getInstance();
+
+    cout << boolalfa <<  maquina_config.contains("de");
+    /****
+    for (auto &[k, v] : maquina_config.items()) {
+        cout << "key " << k << " value " << v << endl;
+        if (k == "maximo_estado")
+            core.setaMaximoEstado(v.get<int>());
+        if (k == "simbolo_incial")
+            core.setaSimboloInicial(v.get<int>());
+        if (k == "estados_finais")
+            core.setaEstadosFinais(v.get<vector<unsigned int>>());
+        if (k == "transicoes") {
+            for (auto &[k1, v1] : v.items()) {
+                for (auto &[k2, v2] : v1.items()) {
+                    int i = v[2][0][0];
+                    // core.pegaTransicao()[de] = para;
+                }
+            }
+        }
+    }
+    ****/
+}
 

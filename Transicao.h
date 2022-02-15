@@ -42,6 +42,7 @@ class Transicao : public
         }
         ****/
         void setaAlfabeto(vector<char> &a) { alfa = &a; }
+        void setaEstadosFinais(std::vector<unsigned int> il) { finais = il; }
         void setaEstadosFinais(std::initializer_list<unsigned int> il) {
             finais.clear();
             for (auto &a : il)

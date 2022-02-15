@@ -1,0 +1,14 @@
+{
+    "fita" : ["a", "b", "a", "a"],
+    "alfabeto" : ["a", "b", " "],
+    "transicoes": [
+        {"de" : [3, "a"], "para" : [4, "b"]},
+        {"de" : [3, "a"], "para" : [4, "b"]}
+    ],
+    "maximo_estado" : 5,
+    "simbolo_incial" : 1,
+    "estados_finais" : [4, 3]
+}
+
+
+

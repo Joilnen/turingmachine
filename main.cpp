@@ -36,7 +36,7 @@ static void main_loop(void*);
 static int main_loop_native(void);
 unsigned int Width, Height;
 
-int main(int, char**)
+int main(int, char **)
 {
     // Setup SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -112,7 +112,9 @@ int main(int, char**)
     //IM_ASSERT(font != NULL);
 #endif
     ****/
-    TuringMachine::GetInstance().initCore();
+    TuringMachine::getInstance().init();
+    TuringMachine::getInstance().run();
+    TuringMachine::getInstance().initCore();
 
     // This function call won't return, and will engage in an infinite loop, processing events from the browser, and dispatching them.
 #ifdef EMSCRIPTEN
@@ -191,7 +193,7 @@ static void  main_loop(void* arg)
     }
     NodeEditorShow();
     ****/
-    TuringMachine::GetInstance().InputCleanBox();
+    TuringMachine::getInstance().InputCleanBox();
 
     // Rendering
     ImGui::Render();

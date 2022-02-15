@@ -2,6 +2,7 @@
 #define TURING_MACHINE_H
 
 #include <string>
+#include <sstream>
 #include <map>
 
 #include "idata.h"
@@ -12,39 +13,34 @@
 #endif
 #include <algorithm>
 #include <vector>
+#include "json.hpp"
 
+using json = nlohmann::json;
+ 
+struct TempData;
 
 class TuringMachine {
-    int                   current_id = 0;
-    bool                  ntype[5];
+    int  current_id = 0;
+    bool ntype[5];
+    std::stringstream  buffer;
+     maquina_config;
 
     TuringMachine() { ntype[0] = ntype[1] = ntype[2] = ntype[3] = ntype[4] = true; }
-    unsigned char hexval(unsigned char c);
-    void hex2ascii(const std::string& in, std::string& out);
-    void BinaryTable(const char *hexList);
-    void IPTable();
-    void BinaryAfterIPTable();
-    void InputCipherKey();
-    void PC1();
-    void PC2();
-    void Transform1();
-    void OutBinaryFromIP();
-    void OutBinaryFromPC1();
-    void K1();
-    void FuncaoF();
-    void RoundOutput();
     void MyShowMenuFile();
 
     public:
         void operator =(const TuringMachine &) = delete;
         virtual ~TuringMachine() {  }
-        static TuringMachine &GetInstance() {
+        static TuringMachine &getInstance() {
             static TuringMachine d;
             return d;
         }
+        void checaConsistencia(TempData &t);
         void InputCleanBox();
         void initCore();
         void runCore();
+        void init();
+        void run();
 };
 
 #endif

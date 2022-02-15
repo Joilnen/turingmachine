@@ -4,11 +4,12 @@
 struct TempData {
     Fita<char> fita;
     vector<char> alfabeto;
-    Transicao transicao;
+    Transicao *transicoes;
+    unsigned int maximoEstado;
     unsigned int estado;
     char simbIncial;
-    vector<unsigned int> estados;
-    vector<unsigned int> finais;
+    vector<unsigned int> *estados;
+    set<unsigned int> *finais;
 };
 
 #endif
