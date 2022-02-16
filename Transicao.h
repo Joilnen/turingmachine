@@ -12,20 +12,20 @@ using namespace std;
 class Transicao : public 
         map<pair<unsigned int, char>, pair<unsigned int, char> > {
     vector<unsigned int> finais;
-    unsigned int inicial, max_estado;
+    unsigned int inicial, maxEstado;
     vector<char> *alfa;
     public:
         Transicao() { }
         ~Transicao() { }
         void setaEstadoInicial(unsigned int i) { inicial = i; }
         void setaMaximoEstado(unsigned int i) {
-            max_estado = i;
-            for(unsigned int i {0}; i < max_estado + 1; ++i)
+            maxEstado = i;
+            for(unsigned int i {0}; i < maxEstado + 1; ++i)
                 finais.push_back(false);
         }
-        unsigned int pegaMaximoEstado() { return max_estado; }
+        unsigned int pegaMaximoEstado() { return maxEstado; }
         void adicionaEstadoFinal(unsigned int i) {
-            if (i < max_estado + 1)
+            if (i < maxEstado + 1)
                 finais[i] = true;
             else
                 cerr << "* estado fora dos limites\n";
@@ -33,7 +33,7 @@ class Transicao : public
         /****
         void operator[] (pair<unsigned int, char> i, pair<unsigned int, char> j, std::greater<char> g)
         {
-            if (i.first <= max_estado && j.first <= max_estado &&
+            if (i.first <= maxEstado && j.first <= maxEstado &&
                 std::find(std::begin(*alfa), std::end(*alfa), i.second) != std::end(*alfa) &&
                 std::find(std::begin(*alfa), std::end(*alfa), j.second) != std::end(*alfa))
                 this->insert({i, j});
@@ -46,7 +46,7 @@ class Transicao : public
         void setaEstadosFinais(std::initializer_list<unsigned int> il) {
             finais.clear();
             for (auto &a : il)
-                if (a >= 0 && a < max_estado + 1)
+                if (a >= 0 && a < maxEstado + 1)
                     finais.push_back(a);
         }
 

@@ -44,18 +44,10 @@ class Core {
                     return false;
             }
 
-            //! checa se nao transicao (de para) do estado zero (inicial)
-            vector<unsigned int> tmp;
-            std::for_each(std::begin(transicao), std::end(transicao), [&tmp] (auto &a) {
-                tmp.push_back(a.first.first);
-            });
-            if (std::find(std::begin(tmp), std::end(tmp), 0) == std::end(tmp))
-                return false;
-
             //! checa transicoes
             for (auto &a : transicao)
             {
-                //! transicao (de onde vem) contem apenas simolos do alfabeto ?
+                //! transicao (de onde vem) contem apenas simbolos do alfabeto ?
                 if (std::find(std::begin(alfabeto), std::end(alfabeto), a.first.second)
                         == std::end(alfabeto))
                     return false;
@@ -68,6 +60,10 @@ class Core {
                 //! se estado estah dentro dos limites e se nao parte de estado final
                 if (a.first.first < 0 || a.first.first > transicao.pegaMaximoEstado() || 
                     transicao.eh_final(a.first.first))
+                        return false;
+                //
+                //! se estado estah dentro dos limites e se nao parte de estado final
+                if (a.second.first < 0 || a.second.first > transicao.pegaMaximoEstado())
                         return false;
             }
 

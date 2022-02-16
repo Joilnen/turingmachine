@@ -11,7 +11,7 @@ template <typename T>
 class Fita : public std::vector<T> {
     T simbInicial;
     public:
-        Fita(): simbInicial{0x01} { this->push_back(simbInicial); }
+        Fita(): simbInicial{0x01} { this->insert(simbInicial); }
         Fita(T a): simbInicial(a) { this->push_back(simbInicial); }
         ~Fita() { }
         void impSimbIni() {

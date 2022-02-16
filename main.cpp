@@ -73,6 +73,7 @@ int main(int, char **)
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    ImGui::StyleColorsLight();
     ImGuiIO& io = ImGui::GetIO();
     // ion.LinkDetachWithModifierClick.Modifier = &ImGui::GetIO().KeyCtrl;
     // ImFont* pFont = io.Fonts->AddFontFromFileTTF("fonts/ProggyTiny.ttf", 16.0f);
@@ -114,7 +115,7 @@ int main(int, char **)
     ****/
     TuringMachine::getInstance().init();
     TuringMachine::getInstance().run();
-    TuringMachine::getInstance().initCore();
+    // TuringMachine::getInstance().initCore();
 
     // This function call won't return, and will engage in an infinite loop, processing events from the browser, and dispatching them.
 #ifdef EMSCRIPTEN
@@ -124,6 +125,11 @@ int main(int, char **)
 #endif
 }
 
+static void Sai()
+{
+    SDL_Quit();
+    exit(0);
+}
 
 static void  main_loop(void* arg)
 {
@@ -143,6 +149,8 @@ static void  main_loop(void* arg)
     while (SDL_PollEvent(&event))
     {
         ImGui_ImplSDL2_ProcessEvent(&event);
+        if (event.type == SDL_QUIT)
+            Sai();
     }
 
     // Start the Dear ImGui frame

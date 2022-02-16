@@ -285,13 +285,10 @@ void TuringMachine::init()
             buffer << line << '\n';
         }
         ifs.close();
+        maquinaConfig = json::parse(buffer.str());
     }
     else
         cerr << "* erro ao abrir arquivo maquina.json\n"; 
-
-    maquinaConfig = json::parse(buffer.str());
-    for (auto &[k, v] : j.items())
-        cout << "key " << k << " value " << v << endl;
 }
 
 void TuringMachine::run()
@@ -299,31 +296,28 @@ void TuringMachine::run()
     auto core = Core::getInstance();
 
     cout << "Show " <<  boolalpha << maquinaConfig.contains("transicoes") << endl;
+    vector<char> v = maquinaConfig["alfabeto"];
+    core.adicionaAlfabeto(move(v));
     for_each(begin(maquinaConfig["transicoes"]), end(maquinaConfig["transicoes"]), [&core](auto &a) {
         unsigned int i = a["de"][0];
         std::string c = a["de"][1];
-        pair p (i, c.c_str()[0]);
-        cout << p.first << "==" << p.second << endl;
+        pair p0 (i, c.c_str()[0]);
+        i = a["para"][0];
+        c = a["para"][1];
+        pair<unsigned int, char> p1;
+        if (c == "mD")
+            p1 = {i, mD};
+        else if (c == "mE")
+            p1 = {i, mE};
+        else
+            p1 = {i, c.c_str()[0]};
 
+
+        cout << "(" << p0.first << ", " << p0.second << ")" << "=>"
+             << "(" << p1.first << ", " << p1.second << ")" << endl;
+        core.pegaTransicao()[p0] = p1;
     });
-    /****
-    for (auto &[k, v] : maquina_config.items()) {
-        cout << "key " << k << " value " << v << endl;
-        if (k == "maximo_estado")
-            core.setaMaximoEstado(v.get<int>());
-        if (k == "simbolo_incial")
-            core.setaSimboloInicial(v.get<int>());
-        if (k == "estados_finais")
-            core.setaEstadosFinais(v.get<vector<unsigned int>>());
-        if (k == "transicoes") {
-            for (auto &[k1, v1] : v.items()) {
-                for (auto &[k2, v2] : v1.items()) {
-                    int i = v[2][0][0];
-                    // core.pegaTransicao()[de] = para;
-                }
-            }
-        }
-    }
-    ****/
+
 }
+
 
