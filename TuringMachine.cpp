@@ -2,7 +2,7 @@
 #include <sstream>
 #include <set>
 #include "imgui.h"
-#include "turing_machine.h"
+#include "TuringMachine.h"
 #include "Core.h"
 #include "TempData.h"
 
@@ -289,7 +289,7 @@ void TuringMachine::init()
     else
         cerr << "* erro ao abrir arquivo maquina.json\n"; 
 
-    maquina_config = json::parse(buffer.str());
+    maquinaConfig = json::parse(buffer.str());
     for (auto &[k, v] : j.items())
         cout << "key " << k << " value " << v << endl;
 }
@@ -298,7 +298,14 @@ void TuringMachine::run()
 {
     auto core = Core::getInstance();
 
-    cout << boolanalfa <<  maquina_config.contains("de");
+    cout << "Show " <<  boolalpha << maquinaConfig.contains("transicoes") << endl;
+    for_each(begin(maquinaConfig["transicoes"]), end(maquinaConfig["transicoes"]), [&core](auto &a) {
+        unsigned int i = a["de"][0];
+        std::string c = a["de"][1];
+        pair p (i, c.c_str()[0]);
+        cout << p.first << "==" << p.second << endl;
+
+    });
     /****
     for (auto &[k, v] : maquina_config.items()) {
         cout << "key " << k << " value " << v << endl;

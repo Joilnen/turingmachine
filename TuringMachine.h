@@ -23,7 +23,7 @@ class TuringMachine {
     int  current_id = 0;
     bool ntype[5];
     std::stringstream  buffer;
-    json maquina_config;
+    json maquinaConfig;
 
     TuringMachine() { ntype[0] = ntype[1] = ntype[2] = ntype[3] = ntype[4] = true; }
     void MyShowMenuFile();

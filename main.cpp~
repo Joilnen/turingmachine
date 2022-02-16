@@ -20,7 +20,7 @@
     #include <SDL2/SDL_opengles2.h>
 #endif
 
-#include "turing_machine.h"
+#include "TuringMachine.h"
 
 /******* meus includes ********/
 #include "Core.h"
@@ -61,7 +61,7 @@ int main(int, char **)
     SDL_DisplayMode current;
     SDL_GetCurrentDisplayMode(0, &current);
     SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-    g_Window = SDL_CreateWindow("Papadimitriou - joilnen e larissa", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
+    g_Window = SDL_CreateWindow("Papadimitriou - joilnen", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
     g_GLContext = SDL_GL_CreateContext(g_Window);
     if (!g_GLContext)
     {
@@ -75,7 +75,8 @@ int main(int, char **)
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     // ion.LinkDetachWithModifierClick.Modifier = &ImGui::GetIO().KeyCtrl;
-    // ImFont* pFont = io.Fonts->AddFontFromFileTTF("fonts/ProggyTiny.ttf", 10.0f);
+    // ImFont* pFont = io.Fonts->AddFontFromFileTTF("fonts/ProggyTiny.ttf", 16.0f);
+    ImFont* pFont = io.Fonts->AddFontFromFileTTF("fonts/Hack-Regular.ttf", 16.0f);
     io.IniFilename = NULL;
     (void)io;
     //
