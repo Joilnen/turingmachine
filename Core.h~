@@ -10,7 +10,6 @@
 
 using namespace std;
 
-const char mD {0x02}, mE {0x03};
 
 class Core {
     Fita<char> fita;
@@ -103,9 +102,9 @@ class Core {
             if (estado)
                 return false;
 
-            cabeca = std::begin(fita);
+            cabeca = begin(fita);
             cout << "Valor cabeca\n";
-            for (auto a = cabeca; a != std::end(fita); ++a) {
+            for (auto a = cabeca; a != end(fita); ++a) {
                 cout << static_cast<int>(*a) << " "
                      << *a << " ";
             }
@@ -114,20 +113,28 @@ class Core {
             while (cabeca != std::end(fita))
             {
                 auto r { transicao.processa(cabeca, estado) };
-                if (!r)
-                    return false;
-
+                if (!r) {
+                    cout << "* pos na fita\n";
+                    for_each(begin(fita), cabeca + 1, [](auto &a) { cout << a; });
+                    cout << endl;
+                    if (transicao.estado_final(estado) > 0) {
+                        cout << "ACEITA\n";
+                        return true;
+                    }
+                    else {
+                        cout << "REJEITA\n";
+                        return false;
+                    }
+                }
                 estado = get<0>(*r);
 
                 if (transicao.estado_final(estado) > 0) {
+                    cout << "* pos na fita\n";
+                    for_each(begin(fita), cabeca+1, [](auto &a) { cout << a; });
+                    cout << endl;
                     cout << "ACEITA\n";
                     return true;
                 }
-                else {} // if(transicao.estado_final(estado) == 0) {
-                    cout << "REJEITA\n";
-                    return true;
-                }
-
                 if (get<2>(*r) == Move::D) ++cabeca;
                 if (get<2>(*r) == Move::E) --cabeca;
 
@@ -140,8 +147,6 @@ class Core {
 
             return false;
         }
-
-
 };
 
 #endif
