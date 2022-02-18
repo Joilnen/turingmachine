@@ -40,7 +40,8 @@ class TuringMachine {
         void initCore();
         void runCore();
         void init();
-        void run();
+        void config();
+        void mostraConfig();
 };
 
 #endif

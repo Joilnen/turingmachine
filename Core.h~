@@ -16,6 +16,7 @@ class Core {
     Transicao transicao;
     vector<char>::iterator cabeca;
     unsigned int estado;
+    char simboloBranco;
 
     Core() { Core(0x01); }
     Core(char si) : fita(si), estado{0} { fita.impSimbIni(); }
@@ -34,6 +35,7 @@ class Core {
         void operator=(Core const&) = delete;
          
         void setaSimboloInicial(const char c) { fita[0] = c; }
+        void setaSimboloBranco(const char c) { simboloBranco = c; }
         Transicao &pegaTransicao() { return transicao; }
         Fita<char> &pegaFita() { return fita; }
         void adicionaAlfabeto(vector<char> &&a) { alfabeto = a; transicao.setaAlfabeto(alfabeto); }
@@ -73,9 +75,11 @@ class Core {
         unsigned int pegaEstadoAtual() { return estado; }
         void setaMaximoEstado(unsigned int i) { transicao.setaMaximoEstado(i); }
         void setaEstadoInicial(unsigned int i) { transicao.setaEstadoInicial(i); }
-        void setaEstadosFinais(std::initializer_list<unsigned int> il) { transicao.setaEstadosFinais(il); }
-        void setaEstadosFinais(const vector<unsigned int> &il) { transicao.setaEstadosFinais(il); }
-        void adicionaMove(Move m) { transicao.adicionaMove(il); }
+        void setaEstadosAceitos(std::initializer_list<unsigned int> il) { transicao.setaEstadosAceitos(il); }
+        void setaEstadosAceitos(const vector<unsigned int> &il) { transicao.setaEstadosFinais(il); }
+        void setaEstadosRejeitados(std::initializer_list<unsigned int> il) { transicao.setaEstadosRejeitados(il); }
+        void setaEstadosRejeitados(const vector<unsigned int> &il) { transicao.setaEstadosRejeitados(il); }
+        void adicionaMove(Move m) { transicao.adicionaMove(m); }
         bool run() {
             if (!checaConsistencia())
                 return false;

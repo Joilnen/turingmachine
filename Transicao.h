@@ -35,12 +35,20 @@ class Transicao : public
         }
 
         void setaAlfabeto(vector<char> &a) { alfa = &a; }
-        void setaEstadosFinais(std::vector<unsigned int> il) { estadosAceitos = il; }
-        void setaEstadosFinais(std::initializer_list<unsigned int> il) {
+        void setaEstadosAceitos(std::vector<unsigned int> il) { estadosAceitos = il; }
+        void setaEstadosAceitos(std::initializer_list<unsigned int> il) {
             estadosAceitos.clear();
             for (auto &a : il)
                 if (a >= 0 && a < maxEstado + 1)
                     estadosAceitos.push_back(a);
+        }
+
+        void setaEstadosRejeitados(std::vector<unsigned int> il) { estadosRejeitados = il; }
+        void setaEstadosRejeitados(std::initializer_list<unsigned int> il) {
+            estadosAceitos.clear();
+            for (auto &a : il)
+                if (a >= 0 && a < maxEstado + 1)
+                    estadosRejeitados.push_back(a);
         }
 
         pair<unsigned int, char> *processa(vector<char>::iterator &c, unsigned int &e)

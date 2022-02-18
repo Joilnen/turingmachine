@@ -1,3 +1,4 @@
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <set>
@@ -34,6 +35,7 @@ void TuringMachine::initCore()
      * lembrar que core eh criado com simbolo inicial 0x01 por
      * padrao usar getInstance('x') para mudar
      */
+    /****
     auto core = Core::getInstance();
     //! vector<char> alfa {'a', 'b', 'c', ' ', 'x'}; 
     core.adicionaAlfabeto({'a', 'b', 'c', ' ', 'x', 0x01});
@@ -50,6 +52,7 @@ void TuringMachine::initCore()
     std::cout << "Estado atual antes do run " <<  core.pegaEstadoAtual() << std::endl;
     std::cout << "Aceita ? " << std::boolalpha << core.run() << std::endl;
     std::cout << "Estado final depois do run " <<  core.pegaEstadoAtual() << std::endl;
+    ****/
 }
 
 void TuringMachine::runCore()
@@ -59,7 +62,7 @@ void TuringMachine::runCore()
     //! 0 eh o estado inicial padrao
     core.adicionaAlfabeto({'c', 0x01});
     core.setaMaximoEstado(3);
-    core.setaEstadosFinais({3});
+    core.setaEstadosAceitos({3});
     core.pegaTransicao().limpa();
     core.pegaTransicao()[{0, 'c'}] = {1, 'c'};
     core.pegaTransicao()[{1, 'c'}] = {2, 'c'};
@@ -102,12 +105,31 @@ void TuringMachine::init()
         cerr << "* erro ao abrir arquivo maquina.json\n"; 
 }
 
-void TuringMachine::run()
+void TuringMachine::mostraConfig()
+{
+    auto &core = Core::getInstance();
+
+    cout << "* fita\n";
+    auto v = core.pegaFita();
+    for (auto &a : v)
+        cout << a << endl;
+}
+
+void TuringMachine::config()
 {
     auto core = Core::getInstance();
 
-    cout << "Show " <<  boolalpha << maquinaConfig.contains("transicoes") << endl;
+    cout << "Contem trancicoes " <<  boolalpha << maquinaConfig.contains("transicoes") << endl;
+    cout << "Contem fita " <<  boolalpha << maquinaConfig.contains("fita") << endl;
+
     vector<char> v;
+    for_each (begin(maquinaConfig["fita"]), end(maquinaConfig["fita"]), [&core](auto &a) {
+        // cout << typeid(a).name() << endl;
+        string s = a;
+        core.pegaFita().push_back(s.c_str()[0]);
+    }); 
+    //
+    // seta alfabeto
     for_each (begin(maquinaConfig["alfabeto"]), end(maquinaConfig["alfabeto"]), [&v](auto &a) {
         // cout << typeid(a).name() << endl;
         string s = a;
@@ -115,6 +137,7 @@ void TuringMachine::run()
     }); 
     core.adicionaAlfabeto(move(v));
 
+    // seta transicoes
     for_each(begin(maquinaConfig["transicoes"]), end(maquinaConfig["transicoes"]), [&core](auto &a) {
         pair<unsigned int, char> p0, p1;
         unsigned int i = a["de"][0];
@@ -134,6 +157,26 @@ void TuringMachine::run()
         core.pegaTransicao()[p0] = p1;
     });
 
+    // seta simbolo branco
+    string s = maquinaConfig["simbolo_branco"];
+    core.setaSimboloBranco(s.c_str()[0]);
+
+    // seta maximo estado
+    unsigned int i = maquinaConfig["maximo_estado"];
+    core.setaMaximoEstado(i);
+
+    // 
+    vector<unsigned int> vi;
+    for_each(begin(maquinaConfig["estados_aceitos"]), end(maquinaConfig["estados_aceitos"]), [&vi](auto &a) {
+        vi.push_back(a);
+    });
+    core.setaEstadosAceitos(move(vi));
+
+    vi.clear();
+    for_each(begin(maquinaConfig["estados_rejeitados"]), end(maquinaConfig["estados_rejeitados"]), [&vi](auto &a) {
+        vi.push_back(a);
+    });
+    core.setaEstadosRejeitados(move(vi));
 }
 
 

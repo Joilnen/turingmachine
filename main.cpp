@@ -4,6 +4,7 @@
 int main(int, char **)
 {
     TuringMachine::getInstance().init();
-    TuringMachine::getInstance().run();
+    TuringMachine::getInstance().config();
+    TuringMachine::getInstance().mostraConfig();
 }
 
