@@ -1,0 +1,82 @@
+TESTES PARA TRABALHO SOBRE MÁQUINAS DE TURING
+TEORIA DA COMPUTAÇÃO- 2021/1
+
+SEGUNDO DIA DE APRESENTAÇÕES: 15/02/2021
+
+
+
+
+Teste 1: M = ({q0, q1, q2, q3, q4, q5, q6, q7},  {a, b, c},  {a, b, c, x, y, B}, δ, q0, {q7 }) 
+
+1-   δ(q0, a) = (q1, x, R),
+2-   δ(q1, a) = (q1, a, R),
+3-   δ(q1, b) = (q1, b, R),
+4-   δ(q1, c) = (q1, c, R),
+5-   δ(q1, B) = (q3, B, L),
+6-   δ(q1, x) = (q3, x, L),
+7-   δ(q1, y) = (q3, y, L),
+8-   δ(q3, a) = (q5, x, L),
+
+9-    δ(q0, b) = (q2, y, R),
+10-  δ(q2, a) = (q2, a, R),
+11-  δ(q2, b) = (q2, b, R),
+12-  δ(q2, c) = (q2, c, R),
+13-  δ(q2, B) = (q4, B, L),
+14-  δ(q2, x) = (q4, x, L),
+15-  δ(q2, y) = (q4, y, L),
+16-  δ(q4, b) = (q5, y, L),
+
+17- δ(q0, c) = (q6, c, R),
+18- δ(q6, x) = (q6, x, R),
+19- δ(q6, y) = (q6, y, R),
+20- δ(q6, B) = (q7, B, L),
+
+21- δ(q5, a) = (q5, a, L),
+22- δ(q5, b) = (q5, b, L),
+23- δ(q5, c) = (q5, c, L) 
+24- δ(q5, x) = (q0, x, R),
+25- δ(q5, y) = (q0, y, R) 
+
+
+Teste 2: M = ({q0, q1, q2, q3, q4, qf,qv, q>=, q< }, {1,0}, {1,0,x,y, B}, δ, q0,  { q>=, q< }) 
+
+Entrada: dois inteiros positivos x e y, onde cada inteiro é representado por uma cadeia de 1’s, cujo tamanho é o valor do inteiro. Por exemplo, 4 é representado por 1111.
+Para indicar que há dois inteiros na fita, um 0 separa as duas sequências de 1’s.
+
+1-   δ(q0, 1) = (q1, x, R),
+2-   δ(q0, 0) = (q4, 0, R),
+3-   δ(q1, 1) = (q1, 1, R),
+4-   δ(q1, 0) = (q2, 0, R),
+5-   δ(q2, 1) = (q3, y, L),
+6-   δ(q2, y) = (q2, y, R),
+7-   δ(q2, B) = (qv, B, L),
+8-   δ(q3, y) = (q3, y, L),
+9-   δ(q3, 0) = (q3, 0, L),
+10- δ(q3, 1) = (q3, 1, L),
+11-  δ(q3, x) = (q0, x, R),
+12- δ(q4, y) = (q4, y, R),
+13- δ(q4, 1) = (qf, 1, L),
+14- δ(q4, B) = (qv, B, L),
+15- δ(qf, 0) = (qf, 0, L),
+16- δ(qf, y) = (qf, 1, L),
+17- δ(qf, x) = (qf, 1, L),
+18- δ(qf, B) = (q<, B, R),
+19- δ(qv, y) = (qv, 1, L),
+20- δ(qv, x) = (qv, 1, L),
+21- δ(qv, 0) = (qv, 0, L),
+22- δ(qv, 1) = (qv, 1, L),
+23- δ(qv, B) = (q>=, B, R) 
+
+Teste 3: M = ({q0, q1, q2, q3, q4}, {1}, {1,0,B}, δ, q0,  { q4}) 
+
+Entrada: dois inteiros positivos x e y, onde cada inteiro é representado por uma cadeia de 1’s, cujo tamanho é o valor do inteiro. Por exemplo, 4 é representado por 1111.
+Para indicar que há dois inteiros na fita, um 0 separa as duas sequências de 1’s.
+
+1-   δ(q0, 1) = (q0, 1, R),
+2-   δ(q0, 0) = (q1, 1, R),
+3-   δ(q1, 1) = (q1, 1, R),
+4-   δ(q1, B) = (q2, B, L),
+5-   δ(q2, 1) = (q3, 0, L),
+6-   δ(q3, 1) = (q3, 1, L),
+7-   δ(q3, B) = (q4, B, R),
+

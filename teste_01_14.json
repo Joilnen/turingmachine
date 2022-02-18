@@ -4,6 +4,7 @@
     "simbolo_inicio" : "K",
     "simbolo_branco" : "B",
     "transicoes": [
+        {"de" : [0, "K"], "para" : [0, "K"], "move" : "D"},
         {"de" : [0, "a"], "para" : [1, "x"], "move" : "D"},
         {"de" : [1, "a"], "para" : [1, "a"], "move" : "D"},
         {"de" : [1, "y"], "para" : [1, "y"], "move" : "D"},

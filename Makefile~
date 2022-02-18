@@ -17,7 +17,7 @@ CC = cc
 CXX = c++
 WEB_DIR = web
 NAT_DIR = nat
-EXE = $(NAT_DIR)/mt
+EXE = mt
 IMGUI_DIR = ../..
 SOURCES = main.cpp TuringMachine.cpp
 OBJS = $(addsuffix .o, $(basename $(notdir $(SOURCES))))
@@ -45,7 +45,7 @@ EMS =
 ##---------------------------------------------------------------------
 
 #CPPFLAGS += -g
-CPPFLAGS += -Wall -O3 # $(EMS)
+CPPFLAGS += -Wall -g # -O3 # $(EMS)
 LDFLAGS += #--shell-file shell_minimal.html $(EMS)
 
 ##---------------------------------------------------------------------
@@ -58,14 +58,9 @@ LDFLAGS += #--shell-file shell_minimal.html $(EMS)
 all: $(EXE)
 	@echo Build complete for $(EXE)
 
-$(NAT_DIR):
-	mkdir $@
-
-serve: all
-	python3 -m http.server -d $(WEB_DIR)
-
-$(EXE): $(OBJS) $(NAT_DIR)
+$(EXE): $(OBJS)
 	$(CXX) -o $@ $(OBJS) $(LDFLAGS)
 
 clean:
-	rm -rf $(OBJS) $(WEB_DIR) $(NAT_DIR)
+	rm -rf $(OBJS) $(EXE) )
+
