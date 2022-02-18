@@ -2,6 +2,7 @@
 #include <sstream>
 #include <set>
 #include "TuringMachine.h"
+#include "TuringMachine.h"
 #include "Core.h"
 #include "TempData.h"
 
@@ -89,7 +90,13 @@ void TuringMachine::init()
             buffer << line << '\n';
         }
         ifs.close();
-        maquinaConfig = json::parse(buffer.str());
+        try {
+            maquinaConfig = json::parse(buffer.str());
+        }
+        catch (...)
+        {
+            cerr << "* maquina.json inconsistente\n";
+        }
     }
     else
         cerr << "* erro ao abrir arquivo maquina.json\n"; 
@@ -109,22 +116,21 @@ void TuringMachine::run()
     core.adicionaAlfabeto(move(v));
 
     for_each(begin(maquinaConfig["transicoes"]), end(maquinaConfig["transicoes"]), [&core](auto &a) {
+        pair<unsigned int, char> p0, p1;
         unsigned int i = a["de"][0];
         std::string c = a["de"][1];
-        pair p0 (i, c.c_str()[0]);
+        p0 = {i, c.c_str()[0]};
         i = a["para"][0];
         c = a["para"][1];
-        pair<unsigned int, char> p1;
-        if (c == "mD")
-            p1 = {i, mD};
-        else if (c == "mE")
-            p1 = {i, mE};
-        else
-            p1 = {i, c.c_str()[0]};
+        p1 = {i, c.c_str()[0]};
 
-
+        string m = a["move"];
         cout << "(" << p0.first << ", " << p0.second << ")" << "=>"
-             << "(" << p1.first << ", " << p1.second << ")" << endl;
+             << "(" << p1.first << ", " << p1.second << ")" << " " << m << endl;
+        if (m == "E")
+            core.adicionaMove(Move::E);
+        else if (m == "D")
+            core.adicionaMove(Move::D);
         core.pegaTransicao()[p0] = p1;
     });
 

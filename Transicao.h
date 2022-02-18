@@ -9,9 +9,12 @@
 
 using namespace std;
 
+enum class Move {D, E};
+
 class Transicao : public 
         map<pair<unsigned int, char>, pair<unsigned int, char> > {
-    vector<unsigned int> finais;
+    vector<unsigned int> estadosAceitos, estadosRejeitados;
+    vector<Move> listaMove;
     unsigned int inicial, maxEstado;
     vector<char> *alfa;
     public:
@@ -21,12 +24,12 @@ class Transicao : public
         void setaMaximoEstado(unsigned int i) {
             maxEstado = i;
             for(unsigned int i {0}; i < maxEstado + 1; ++i)
-                finais.push_back(false);
+                estadosAceitos.push_back(false);
         }
         unsigned int pegaMaximoEstado() { return maxEstado; }
         void adicionaEstadoFinal(unsigned int i) {
             if (i < maxEstado + 1)
-                finais[i] = true;
+                estadosAceitos[i] = true;
             else
                 cerr << "* estado fora dos limites\n";
         }
@@ -42,12 +45,12 @@ class Transicao : public
         }
         ****/
         void setaAlfabeto(vector<char> &a) { alfa = &a; }
-        void setaEstadosFinais(std::vector<unsigned int> il) { finais = il; }
+        void setaEstadosFinais(std::vector<unsigned int> il) { estadosAceitos = il; }
         void setaEstadosFinais(std::initializer_list<unsigned int> il) {
-            finais.clear();
+            estadosAceitos.clear();
             for (auto &a : il)
                 if (a >= 0 && a < maxEstado + 1)
-                    finais.push_back(a);
+                    estadosAceitos.push_back(a);
         }
 
         pair<unsigned int, char> *processa(vector<char>::iterator &c, unsigned int &e)
@@ -64,12 +67,14 @@ class Transicao : public
 
         bool eh_final(unsigned int i)
         {
-            return std::find(std::begin(finais), std::end(finais), i) != std::end(finais);
+            return std::find(std::begin(estadosAceitos), std::end(estadosAceitos), i) != std::end(estadosAceitos);
         }
         
         void limpa() {
             this->clear();
         }
+
+        void adicionaMove(Move m) { listaMove.push_back(m); }
 };
 
 #endif

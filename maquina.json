@@ -1,13 +1,15 @@
 {
     "fita" : ["a", "b", "a", "a"],
-    "alfabeto" : ["a", "b", " "],
+    "alfabeto" : ["a", "b"],
+    "simbolo_branco" : "Z",
     "transicoes": [
-        {"de" : [3, "a"], "para" : [4, "b"]},
-        {"de" : [3, "a"], "para" : [4, "b"]}
+        {"de" : [3, "a"], "para" : [4, "b"], "move" : "D"},
+        {"de" : [3, "a"], "para" : [4, "b"], "move" : "E"}
     ],
     "maximo_estado" : 5,
-    "simbolo_incial" : 1,
-    "estados_finais" : [4, 3]
+    "simbolo_inicial" : 1,
+    "estados_aceitos" : [4, 3],
+    "estados_rejeitados" : [1, 5]
 }
 
 

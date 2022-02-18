@@ -33,6 +33,7 @@ class Core {
         // Core(Core const&) = delete;
         void operator=(Core const&) = delete;
          
+        void setaSimboloInicial(const char c) { fita[0] = c; }
         Transicao &pegaTransicao() { return transicao; }
         Fita<char> &pegaFita() { return fita; }
         void adicionaAlfabeto(vector<char> &&a) { alfabeto = a; transicao.setaAlfabeto(alfabeto); }
@@ -74,7 +75,7 @@ class Core {
         void setaEstadoInicial(unsigned int i) { transicao.setaEstadoInicial(i); }
         void setaEstadosFinais(std::initializer_list<unsigned int> il) { transicao.setaEstadosFinais(il); }
         void setaEstadosFinais(const vector<unsigned int> &il) { transicao.setaEstadosFinais(il); }
-        // void setaEstadosFinais(vector<unsigned int> &il) { transicao.setaEstadosFinais(il); }
+        void adicionaMove(Move m) { transicao.adicionaMove(m); }
         bool run() {
             if (!checaConsistencia())
                 return false;
@@ -116,7 +117,6 @@ class Core {
             return false;
         }
 
-        void setaSimboloInicial(const char c) { fita[0] = c; }
 
 };
 
