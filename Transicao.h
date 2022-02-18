@@ -18,6 +18,7 @@ class Transicao : public
     vector<Move> listaMove;
     unsigned int inicial, maxEstado;
     vector<char> *alfa;
+    int aceito;
     public:
         Transicao() { }
         ~Transicao() { }
@@ -66,9 +67,12 @@ class Transicao : public
             return nullptr;
         }
 
-        bool eh_final(unsigned int i)
+        int estado_final(unsigned int i)
         {
-            return std::find(std::begin(estadosAceitos), std::end(estadosAceitos), i) != std::end(estadosAceitos);
+            if (std::find(std::begin(estadosAceitos), std::end(estadosAceitos), i) != std::end(estadosAceitos)) return +1;
+            // else if(std::find(std::begin(estadosRejeitados), std::end(estadosRejeitados), i) != std::end(estadosRejeitados)) return 0;
+            else
+                return -1;
         }
         
         void limpa() {

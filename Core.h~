@@ -68,15 +68,13 @@ class Core {
             for (auto &a : transicao)
             {
                 //! transicao (de onde vem) contem apenas simbolos do alfabeto ?
-                if (std::find(std::begin(alfabetoMaquina), std::end(alfabetoMaquina), a.first.second)
-                        == std::end(alfabetoMaquina))
+                if (std::find(std::begin(alfabetoMaquina), std::end(alfabetoMaquina), a.first.second) == std::end(alfabetoMaquina))
                     return false;
                 //! transicao (pra onde vai) contem apenas simolos do alfabeto ?
                 if (std::find(std::begin(alfabetoMaquina), std::end(alfabetoMaquina), get<1>(a.second)) == std::end(alfabetoMaquina))
                         return false;
                 //! se estado estah dentro dos limites e se nao parte de estado final
-                if (a.first.first < 0 || a.first.first > transicao.pegaMaximoEstado() || 
-                    transicao.eh_final(a.first.first))
+                if (a.first.first < 0 || a.first.first > transicao.pegaMaximoEstado())
                         return false;
                 //
                 //! se estado estah dentro dos limites e se nao parte de estado final
@@ -121,8 +119,14 @@ class Core {
 
                 estado = get<0>(*r);
 
-                if (transicao.eh_final(estado))
+                if (transicao.estado_final(estado) > 0) {
+                    cout << "ACEITA\n";
                     return true;
+                }
+                else {} // if(transicao.estado_final(estado) == 0) {
+                    cout << "REJEITA\n";
+                    return true;
+                }
 
                 if (get<2>(*r) == Move::D) ++cabeca;
                 if (get<2>(*r) == Move::E) --cabeca;

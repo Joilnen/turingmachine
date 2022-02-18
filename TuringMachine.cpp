@@ -77,9 +77,14 @@ void TuringMachine::mostraConfig(Core &core)
     cout << core.pegaSimboloInicial() << endl;
 
     cout << "\n* transicao\n";
-    for (auto &a : core.pegaTransicao())
+    for (auto &a : core.pegaTransicao()) {
         cout << a.first.first << " " << a.first.second << " ==> " 
-             << get<0>(a.second) << " " << get<1>(a.second) <<  endl;
+             << get<0>(a.second) << " " << get<1>(a.second) << " ";
+        if (get<2>(a.second) == Move::E)
+            cout << "E\n";
+        else
+            cout << "D\n";
+    }
 
     cout << "\n* maximo estado\n";
     cout << core.pegaMaximoEstado() << endl;
