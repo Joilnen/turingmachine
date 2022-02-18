@@ -39,6 +39,7 @@ class Core {
         Transicao &pegaTransicao() { return transicao; }
         Fita<char> &pegaFita() { return fita; }
         void adicionaAlfabeto(vector<char> &&a) { alfabeto = a; transicao.setaAlfabeto(alfabeto); }
+        vector<char> &pegaAlfabeto() { return alfabeto; }
         bool checaConsistencia() {
             //! checa se fita esta no alfabeto
             for (auto &a : fita)

@@ -13,6 +13,7 @@
 #endif
 #include <algorithm>
 #include <vector>
+#include "Core.h"
 #include "json.hpp"
 
 using json = nlohmann::json;
@@ -35,13 +36,11 @@ class TuringMachine {
             static TuringMachine d;
             return d;
         }
-        void checaConsistencia(TempData &t);
-        void InputCleanBox();
         void initCore();
-        void runCore();
+        void runCore(Core &core);
         void init();
-        void config();
-        void mostraConfig();
+        void config(Core &core);
+        void mostraConfig(Core &core);
 };
 
 #endif

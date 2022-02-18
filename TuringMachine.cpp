@@ -7,28 +7,6 @@
 #include "Core.h"
 #include "TempData.h"
 
-void TuringMachine::checaConsistencia(TempData &t)
-{
-    auto core = Core::getInstance();
-    //! vector<char> alfa {'a', 'b', 'c', ' ', 'x'}; 
-    core.adicionaAlfabeto(move(t.alfabeto));
-    core.setaMaximoEstado(t.maximoEstado);
-    vector<unsigned int> f;
-    // for (auto &a : t.finais) f.push_back(a); 
-    // core.setaEstadosFinais(forward(f));
-    core.pegaTransicao()[{5, 'b'}] = {4, 'a'};
-    // core.pegaTransicao()[{0, 'b'}] = {0, mE};
-    core.pegaTransicao()[{0, 0x01}] = {5, mD};
-    core.pegaFita().adiciona('b');
-    core.pegaFita().adiciona('b');
-    std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
-    std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
-    std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
-    std::cout << "Estado atual antes do run " <<  core.pegaEstadoAtual() << std::endl;
-    std::cout << "Aceita ? " << std::boolalpha << core.run() << std::endl;
-    std::cout << "Estado final depois do run " <<  core.pegaEstadoAtual() << std::endl;
-}
-
 void TuringMachine::initCore()
 {
     /**
@@ -55,9 +33,8 @@ void TuringMachine::initCore()
     ****/
 }
 
-void TuringMachine::runCore()
+void TuringMachine::runCore(Core &core)
 {
-    Core &core = Core::getInstance();
 
     //! 0 eh o estado inicial padrao
     core.adicionaAlfabeto({'c', 0x01});
@@ -105,20 +82,26 @@ void TuringMachine::init()
         cerr << "* erro ao abrir arquivo maquina.json\n"; 
 }
 
-void TuringMachine::mostraConfig()
+void TuringMachine::mostraConfig(Core &core)
 {
-    auto &core = Core::getInstance();
-
     cout << "* fita\n";
     auto v = core.pegaFita();
     for (auto &a : v)
         cout << a << endl;
+
+    cout << "* alfabeto\n";
+    auto alfa = core.pegaAlfabeto();
+    for (auto &a : alfa)
+        cout << a << endl;
+
+    for (auto &a : core.pegaTransicao())
+        cout << a.first.first << " " << a.first.second << " ==> " 
+             << a.second.first << " " << a.second.second <<  endl;
+
 }
 
-void TuringMachine::config()
+void TuringMachine::config(Core &core)
 {
-    auto core = Core::getInstance();
-
     cout << "Contem trancicoes " <<  boolalpha << maquinaConfig.contains("transicoes") << endl;
     cout << "Contem fita " <<  boolalpha << maquinaConfig.contains("fita") << endl;
 
@@ -128,6 +111,9 @@ void TuringMachine::config()
         string s = a;
         core.pegaFita().push_back(s.c_str()[0]);
     }); 
+    cout << "Mostra Fita\n";
+    for (auto &a : core.pegaFita())
+        cout << a << endl;
     //
     // seta alfabeto
     for_each (begin(maquinaConfig["alfabeto"]), end(maquinaConfig["alfabeto"]), [&v](auto &a) {

@@ -3,8 +3,9 @@
 
 int main(int, char **)
 {
+    auto core = Core::getInstance();
     TuringMachine::getInstance().init();
-    TuringMachine::getInstance().config();
-    TuringMachine::getInstance().mostraConfig();
+    TuringMachine::getInstance().config(core);
+    TuringMachine::getInstance().mostraConfig(core);
 }
 

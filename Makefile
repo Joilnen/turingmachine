@@ -45,7 +45,7 @@ EMS =
 ##---------------------------------------------------------------------
 
 #CPPFLAGS += -g
-CPPFLAGS += -Wall -Wformat -Os # $(EMS)
+CPPFLAGS += -Wall -O3 # $(EMS)
 LDFLAGS += #--shell-file shell_minimal.html $(EMS)
 
 ##---------------------------------------------------------------------

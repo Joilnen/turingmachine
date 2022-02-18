@@ -39,6 +39,7 @@ class Core {
         Transicao &pegaTransicao() { return transicao; }
         Fita<char> &pegaFita() { return fita; }
         void adicionaAlfabeto(vector<char> &&a) { alfabeto = a; transicao.setaAlfabeto(alfabeto); }
+        vector<char> &pagaAlfabeto() { return alfabeto; }
         bool checaConsistencia() {
             //! checa se fita esta no alfabeto
             for (auto &a : fita)
@@ -76,7 +77,7 @@ class Core {
         void setaMaximoEstado(unsigned int i) { transicao.setaMaximoEstado(i); }
         void setaEstadoInicial(unsigned int i) { transicao.setaEstadoInicial(i); }
         void setaEstadosAceitos(std::initializer_list<unsigned int> il) { transicao.setaEstadosAceitos(il); }
-        void setaEstadosAceitos(const vector<unsigned int> &il) { transicao.setaEstadosFinais(il); }
+        void setaEstadosAceitos(const vector<unsigned int> &il) { transicao.setaEstadosAceitos(il); }
         void setaEstadosRejeitados(std::initializer_list<unsigned int> il) { transicao.setaEstadosRejeitados(il); }
         void setaEstadosRejeitados(const vector<unsigned int> &il) { transicao.setaEstadosRejeitados(il); }
         void adicionaMove(Move m) { transicao.adicionaMove(m); }
