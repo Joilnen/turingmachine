@@ -33,17 +33,7 @@ class Transicao : public
             else
                 cerr << "* estado fora dos limites\n";
         }
-        /****
-        void operator[] (pair<unsigned int, char> i, pair<unsigned int, char> j, std::greater<char> g)
-        {
-            if (i.first <= maxEstado && j.first <= maxEstado &&
-                std::find(std::begin(*alfa), std::end(*alfa), i.second) != std::end(*alfa) &&
-                std::find(std::begin(*alfa), std::end(*alfa), j.second) != std::end(*alfa))
-                this->insert({i, j});
-            else
-                cerr << "* estado ou simbolo fora dos limites\n";
-        }
-        ****/
+
         void setaAlfabeto(vector<char> &a) { alfa = &a; }
         void setaEstadosFinais(std::vector<unsigned int> il) { estadosAceitos = il; }
         void setaEstadosFinais(std::initializer_list<unsigned int> il) {
