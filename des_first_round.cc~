@@ -1,5 +1,0 @@
-#include "des_first_round.h"
-
-void DesFirstRound::InputCleanBox() {
-
-}
