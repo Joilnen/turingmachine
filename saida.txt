@@ -1,0 +1,37 @@
+{
+    "fita" : ["a", "b", "a", "a"],
+    "alfabeto" : ["a", "b"],
+    "simbolo_branco" : "Z",
+    "transicoes": [
+        {"de" : [3, "a"], "para" : [4, "b"], "move" : "D"},
+        {"de" : [3, "a"], "para" : [4, "b"], "move" : "E"}
+    ],
+    "maximo_estado" : 5,
+    "estados_aceitos" : [4, 3],
+    "estados_rejeitados" : [1, 5]
+}
+
+
+
+** config
+Contem trancicoes true
+Contem fita true
+Mostra Fita
+
+a
+b
+a
+a
+(3, a)=>(4, b) D
+(3, a)=>(4, b) E
+** mostraConfig
+* fita
+
+a
+b
+a
+a
+* alfabeto
+a
+b
+3 a ==> 4 b

@@ -33,37 +33,12 @@ void TuringMachine::initCore()
     ****/
 }
 
-void TuringMachine::runCore(Core &core)
-{
-
-    //! 0 eh o estado inicial padrao
-    core.adicionaAlfabeto({'c', 0x01});
-    core.setaMaximoEstado(3);
-    core.setaEstadosAceitos({3});
-    core.pegaTransicao().limpa();
-    core.pegaTransicao()[{0, 'c'}] = {1, 'c'};
-    core.pegaTransicao()[{1, 'c'}] = {2, 'c'};
-    core.pegaTransicao()[{2, 'c'}] = {3, mD};
-    core.pegaFita().limpa();
-    core.pegaFita().adiciona('c');
-    core.pegaFita().adiciona('c');
-    core.pegaFita().adiciona('c');
-    core.pegaFita().adiciona('c');
-    core.pegaFita().adiciona('c');
-    core.pegaFita().adiciona('c');
-    std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
-    std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
-    std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
-
-    core.run();
-}
-
-void TuringMachine::init()
+void TuringMachine::init(const char *fileName)
 {
     ifstream ifs;
     string line;
     json j;
-    ifs.open("maquina.json");
+    ifs.open(fileName);
     if (ifs.is_open()) {
         while (getline(ifs, line)) {
             cout << line << '\n';
@@ -76,32 +51,62 @@ void TuringMachine::init()
         catch (...)
         {
             cerr << "* maquina.json inconsistente\n";
+            exit(-2);
         }
     }
-    else
-        cerr << "* erro ao abrir arquivo maquina.json\n"; 
+    else { cerr << "* erro ao abrir arquivo maquina.json\n"; exit(-1); }
 }
 
 void TuringMachine::mostraConfig(Core &core)
 {
+    cout << "** f:" << __func__ << endl;
     cout << "* fita\n";
     auto v = core.pegaFita();
     for (auto &a : v)
         cout << a << endl;
 
-    cout << "* alfabeto\n";
+    cout << "\n* alfabeto\n";
     auto alfa = core.pegaAlfabeto();
     for (auto &a : alfa)
         cout << a << endl;
 
+    cout << "\n* simb branco\n";
+    cout << core.pegaSimboloBranco() << endl;
+
+    cout << "\n* simb incial\n";
+    cout << core.pegaSimboloInicial() << endl;
+
+    cout << "\n* transicao\n";
     for (auto &a : core.pegaTransicao())
         cout << a.first.first << " " << a.first.second << " ==> " 
              << a.second.first << " " << a.second.second <<  endl;
 
+    cout << "\n* maximo estado\n";
+    cout << core.pegaMaximoEstado() << endl;
+
+    cout << "\n* estado atual\n";
+    cout << core.pegaEstadoAtual() << endl;
+
+    cout << "\n* estados aceitos\n";
+    for (auto &a : core.pegaEstadosAceitos())
+        cout << a << endl;
+
+    cout << "\n* estados rejeitados\n";
+    for (auto &a : core.pegaEstadosRejeitados())
+        cout << a << endl;
+
+    cout << "\n* lista move\n";
+    for (auto &a : core.pegaListaMove()) {
+        if (a == Move::E)
+            cout << "E" << endl;
+        else if (a == Move::D)
+            cout << "D" << endl;
+    }
 }
 
 void TuringMachine::config(Core &core)
 {
+    cout << "** f:" << __func__ << endl;
     cout << "Contem trancicoes " <<  boolalpha << maquinaConfig.contains("transicoes") << endl;
     cout << "Contem fita " <<  boolalpha << maquinaConfig.contains("fita") << endl;
 
@@ -115,6 +120,14 @@ void TuringMachine::config(Core &core)
     for (auto &a : core.pegaFita())
         cout << a << endl;
     //
+    // seta simbolo branco
+    string s = maquinaConfig["simbolo_branco"];
+    core.setaSimboloBranco(s.c_str()[0]);
+
+    // seta simbolo incial
+    s = maquinaConfig["simbolo_inicio"];
+    core.setaSimboloInicial(s.c_str()[0]);
+
     // seta alfabeto
     for_each (begin(maquinaConfig["alfabeto"]), end(maquinaConfig["alfabeto"]), [&v](auto &a) {
         // cout << typeid(a).name() << endl;
@@ -143,10 +156,6 @@ void TuringMachine::config(Core &core)
         core.pegaTransicao()[p0] = p1;
     });
 
-    // seta simbolo branco
-    string s = maquinaConfig["simbolo_branco"];
-    core.setaSimboloBranco(s.c_str()[0]);
-
     // seta maximo estado
     unsigned int i = maquinaConfig["maximo_estado"];
     core.setaMaximoEstado(i);
@@ -163,6 +172,16 @@ void TuringMachine::config(Core &core)
         vi.push_back(a);
     });
     core.setaEstadosRejeitados(move(vi));
+}
+
+void TuringMachine::roda(Core &core)
+{
+    cout << "** f:" << __func__ << endl;
+    std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
+    std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
+    std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
+
+    core.roda();
 }
 
 

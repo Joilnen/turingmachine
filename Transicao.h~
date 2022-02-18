@@ -42,6 +42,7 @@ class Transicao : public
                 if (a >= 0 && a < maxEstado + 1)
                     estadosAceitos.push_back(a);
         }
+        std::vector<unsigned int> &pegaEstadosAceitos() { return estadosAceitos; }
 
         void setaEstadosRejeitados(std::vector<unsigned int> il) { estadosRejeitados = il; }
         void setaEstadosRejeitados(std::initializer_list<unsigned int> il) {
@@ -50,6 +51,7 @@ class Transicao : public
                 if (a >= 0 && a < maxEstado + 1)
                     estadosRejeitados.push_back(a);
         }
+        std::vector<unsigned int> &pegaEstadosRejeitados() { return estadosRejeitados; }
 
         pair<unsigned int, char> *processa(vector<char>::iterator &c, unsigned int &e)
         {
@@ -73,6 +75,7 @@ class Transicao : public
         }
 
         void adicionaMove(Move m) { listaMove.push_back(m); }
+        std::vector<Move> &pegaListaMove() { return listaMove; }
 };
 
 #endif

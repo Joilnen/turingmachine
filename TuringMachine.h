@@ -37,8 +37,8 @@ class TuringMachine {
             return d;
         }
         void initCore();
-        void runCore(Core &core);
-        void init();
+        void roda(Core &core);
+        void init(const char *fileName = "maquina.json");
         void config(Core &core);
         void mostraConfig(Core &core);
 };

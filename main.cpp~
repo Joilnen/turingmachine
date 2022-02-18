@@ -1,11 +1,15 @@
 #include "TuringMachine.h"
 #include "Core.h"
 
-int main(int, char **)
+int main(int argc, char *argv[])
 {
     auto core = Core::getInstance();
-    TuringMachine::getInstance().init();
+    if (argc)
+        TuringMachine::getInstance().init(argv[1]);
+    else
+        TuringMachine::getInstance().init();
     TuringMachine::getInstance().config(core);
-    TuringMachine::getInstance().mostraConfig();
+    TuringMachine::getInstance().mostraConfig(core);
+    TuringMachine::getInstance().roda(core);
 }
 
