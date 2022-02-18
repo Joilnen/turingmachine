@@ -4,8 +4,8 @@
     "simbolo_inicio" : "K",
     "simbolo_branco" : "Z",
     "transicoes": [
-        {"de" : [0, "a"], "para" : [1, "b"], "move" : "D"},
-        {"de" : [1, "b"], "para" : [4, "a"], "move" : "E"}
+        {"de" : [0, "K"], "para" : [0, "K"], "move" : "D"},
+        {"de" : [0, "a"], "para" : [0, "a"], "move" : "D"}
     ],
     "maximo_estado" : 5,
     "estados_aceitos" : [4, 3],

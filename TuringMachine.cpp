@@ -79,7 +79,7 @@ void TuringMachine::mostraConfig(Core &core)
     cout << "\n* transicao\n";
     for (auto &a : core.pegaTransicao())
         cout << a.first.first << " " << a.first.second << " ==> " 
-             << a.second.first << " " << a.second.second <<  endl;
+             << get<0>(a.second) << " " << get<1>(a.second) <<  endl;
 
     cout << "\n* maximo estado\n";
     cout << core.pegaMaximoEstado() << endl;
@@ -138,21 +138,21 @@ void TuringMachine::config(Core &core)
 
     // seta transicoes
     for_each(begin(maquinaConfig["transicoes"]), end(maquinaConfig["transicoes"]), [&core](auto &a) {
-        pair<unsigned int, char> p0, p1;
+        pair<unsigned int, char> p0;
+        tuple<unsigned int, char, Move> p1;
         unsigned int i = a["de"][0];
         std::string c = a["de"][1];
         p0 = {i, c.c_str()[0]};
         i = a["para"][0];
         c = a["para"][1];
-        p1 = {i, c.c_str()[0]};
 
         string m = a["move"];
         cout << "(" << p0.first << ", " << p0.second << ")" << "=>"
-             << "(" << p1.first << ", " << p1.second << ")" << " " << m << endl;
+             << "(" << get<0>(p1) << ", " << get<1>(p1) << ", " << m << ")" << endl;
         if (m == "E")
-            core.adicionaMove(Move::E);
+            p1 = {i, c.c_str()[0], Move::E};
         else if (m == "D")
-            core.adicionaMove(Move::D);
+            p1 = {i, c.c_str()[0], Move::D};
         core.pegaTransicao()[p0] = p1;
     });
 
@@ -179,7 +179,7 @@ void TuringMachine::roda(Core &core)
     cout << "** f:" << __func__ << endl;
     std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
     std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
-    std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
+    std::cout << "Consistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
 
     core.roda();
 }

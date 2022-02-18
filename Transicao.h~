@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <tuple>
 #include <functional>
 
 using namespace std;
@@ -12,7 +13,7 @@ using namespace std;
 enum class Move {D, E};
 
 class Transicao : public 
-        map<pair<unsigned int, char>, pair<unsigned int, char> > {
+        map<pair<unsigned int, char>, tuple<unsigned int, char, Move> > {
     vector<unsigned int> estadosAceitos, estadosRejeitados;
     vector<Move> listaMove;
     unsigned int inicial, maxEstado;
@@ -51,9 +52,9 @@ class Transicao : public
                 if (a >= 0 && a < maxEstado + 1)
                     estadosRejeitados.push_back(a);
         }
-        std::vector<unsigned int> &pegaEstadosRejeitados() { return estadosRejeitados; }
+        vector<unsigned int> &pegaEstadosRejeitados() { return estadosRejeitados; }
 
-        pair<unsigned int, char> *processa(vector<char>::iterator &c, unsigned int &e)
+        tuple<unsigned int, char, Move> *processa(vector<char>::iterator &c, unsigned int &e)
         {
             for (auto &a : *this)
             {

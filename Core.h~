@@ -52,11 +52,11 @@ class Core {
         vector<char> &pegaAlfabeto() { return alfabeto; }
         bool checaConsistencia() {
             // cout << "))) Fita\n";
-            for (auto &a : fita)
-                cout << a << endl;
-            cout << "))) Alfabeto da Maquina\n";
-            for (auto &a : alfabetoMaquina)
-                cout << a << endl;
+            // for (auto &a : fita)
+            //     cout << a << endl;
+            // cout << "))) Alfabeto da Maquina\n";
+            // for (auto &a : alfabetoMaquina)
+            //     cout << a << endl;
             //! checa se fita esta no alfabeto
             for (auto &a : fita)
             {
@@ -72,8 +72,7 @@ class Core {
                         == std::end(alfabetoMaquina))
                     return false;
                 //! transicao (pra onde vai) contem apenas simolos do alfabeto ?
-                if (std::find(std::begin(alfabetoMaquina), std::end(alfabetoMaquina), a.second.second) ==
-                    std::end(alfabetoMaquina))
+                if (std::find(std::begin(alfabetoMaquina), std::end(alfabetoMaquina), get<1>(a.second)) == std::end(alfabetoMaquina))
                         return false;
                 //! se estado estah dentro dos limites e se nao parte de estado final
                 if (a.first.first < 0 || a.first.first > transicao.pegaMaximoEstado() || 
@@ -81,7 +80,7 @@ class Core {
                         return false;
                 //
                 //! se estado estah dentro dos limites e se nao parte de estado final
-                if (a.second.first < 0 || a.second.first > transicao.pegaMaximoEstado())
+                if (get<0>(a.second) < 0 || get<0>(a.second) > transicao.pegaMaximoEstado())
                         return false;
             }
 
@@ -120,17 +119,15 @@ class Core {
                 if (!r)
                     return false;
 
-                estado = r->first;
-                if (r->second != mE && r->second !=mD)
-                    *cabeca = r->second;
+                estado = get<0>(*r);
 
                 if (transicao.eh_final(estado))
                     return true;
 
-                if (r->second == mD) ++cabeca;
-                if (r->second == mE) --cabeca;
+                if (get<2>(*r) == Move::D) ++cabeca;
+                if (get<2>(*r) == Move::E) --cabeca;
 
-                cout << "rfirst " << r->first << " rsecond " << static_cast<int>(r->second) << endl;
+                cout << "rfirst " << get<0>(*r) << " rsecond " << static_cast<int>(get<1>(*r)) << endl;
                 cout << "*cabeca " << static_cast<int>(*cabeca)  << endl;
                 // getc(stdin);
             }
