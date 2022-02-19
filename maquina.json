@@ -1,6 +1,7 @@
 {
     "fita" : ["K", "a", "b", "a", "a", "Z"],
     "alfabeto" : ["a", "b"],
+    "alfacomp" : ["K", "Z"],
     "simbolo_inicio" : "K",
     "simbolo_branco" : "Z",
     "transicoes": [
@@ -8,9 +9,7 @@
         {"de" : [0, "a"], "para" : [1, "a"], "move" : "D"}
     ],
     "maximo_estado" : 5,
-    "estados_aceitos" : [4, 3],
-    "estados_rejeitados" : [1, 5]
+    "estados_finais" : [4, 3]
 }
-
 
 

@@ -6,35 +6,11 @@
 #include "TuringMachine.h"
 #include "Core.h"
 #include "TempData.h"
-
-void TuringMachine::initCore()
-{
-    /**
-     * lembrar que core eh criado com simbolo inicial 0x01 por
-     * padrao usar getInstance('x') para mudar
-     */
-    /****
-    auto core = Core::getInstance();
-    //! vector<char> alfa {'a', 'b', 'c', ' ', 'x'}; 
-    core.adicionaAlfabeto({'a', 'b', 'c', ' ', 'x', 0x01});
-    core.setaMaximoEstado(5);
-    core.setaEstadosFinais({4});
-    core.pegaTransicao()[{5, 'b'}] = {4, 'a'};
-    // core.pegaTransicao()[{0, 'b'}] = {0, mE};
-    core.pegaTransicao()[{0, 0x01}] = {5, mD};
-    core.pegaFita().adiciona('b');
-    core.pegaFita().adiciona('b');
-    std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
-    std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
-    std::cout << "Conscistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
-    std::cout << "Estado atual antes do run " <<  core.pegaEstadoAtual() << std::endl;
-    std::cout << "Aceita ? " << std::boolalpha << core.run() << std::endl;
-    std::cout << "Estado final depois do run " <<  core.pegaEstadoAtual() << std::endl;
-    ****/
-}
+#include "jcurses.h"
 
 void TuringMachine::init(const char *fileName)
 {
+    LTELA;
     ifstream ifs;
     string line;
     json j;
@@ -55,10 +31,12 @@ void TuringMachine::init(const char *fileName)
         }
     }
     else { cerr << "* erro ao abrir arquivo maquina.json\n"; exit(-1); }
+    CMR1;
 }
 
 void TuringMachine::mostraConfig(Core &core)
 {
+    LTELA;
     cout << "** f:" << __func__ << endl;
     cout << "* fita\n";
     auto v = core.pegaFita();
@@ -107,10 +85,12 @@ void TuringMachine::mostraConfig(Core &core)
         else if (a == Move::D)
             cout << "D" << endl;
     }
+    CMR1;
 }
 
 void TuringMachine::config(Core &core)
 {
+    LTELA;
     cout << "** f:" << __func__ << endl;
     cout << "Contem trancicoes " <<  boolalpha << maquinaConfig.contains("transicoes") << endl;
     cout << "Contem fita " <<  boolalpha << maquinaConfig.contains("fita") << endl;
@@ -177,16 +157,19 @@ void TuringMachine::config(Core &core)
         vi.push_back(a);
     });
     core.setaEstadosRejeitados(move(vi));
+    CMR1;
 }
 
 void TuringMachine::roda(Core &core)
 {
+    LTELA;
     cout << "** f:" << __func__ << endl;
     std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
     std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
     std::cout << "Consistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
 
     core.roda();
+    CMR1;
 }
 
 

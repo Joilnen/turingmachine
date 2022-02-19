@@ -4,13 +4,6 @@
 #include <string>
 #include <sstream>
 #include <map>
-
-#include "idata.h"
-#ifdef EMSCRIPTEN
-    #include <SDL_scancode.h>
-#else
-    #include <SDL2/SDL_scancode.h>
-#endif
 #include <algorithm>
 #include <vector>
 #include "Core.h"
@@ -36,7 +29,6 @@ class TuringMachine {
             static TuringMachine d;
             return d;
         }
-        void initCore();
         void roda(Core &core);
         void init(const char *fileName = "maquina.json");
         void config(Core &core);
