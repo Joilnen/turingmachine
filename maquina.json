@@ -6,7 +6,7 @@
     "simbolo_branco" : "Z",
     "transicoes": [
         {"de" : [0, "K"], "para" : [0, "K"], "move" : "D"},
-        {"de" : [0, "a"], "para" : [1, "a"], "move" : "D"}
+        {"de" : [0, "a"], "para" : [1, "b"], "move" : "D"}
     ],
     "maximo_estado" : 5,
     "estados_finais" : [4, 3]

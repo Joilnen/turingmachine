@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <memory>
 #include <iostream>
+#include "jcurses.h"
 #include "Fita.h"
 #include "Transicao.h"
 #include "Cabeca.h"
@@ -94,7 +95,12 @@ class Core {
         vector<unsigned int> &pegaEstadosRejeitados() { return transicao.pegaEstadosRejeitados(); }
         void adicionaMove(Move m) { transicao.adicionaMove(m); }
         vector<Move> &pegaListaMove() { return transicao.pegaListaMove(); }
+
         bool roda() {
+            int lFita = 10, cFita, cStart, lStart, cCabeca;
+            lStart = lFita;
+            cStart = cFita = 40 - fita.size() / 2 + 1;
+
             if (!checaConsistencia())
                 return false;
 
@@ -102,44 +108,52 @@ class Core {
                 return false;
 
             cabeca = begin(fita);
-            cout << "Valor cabeca\n";
-            for (auto a = cabeca; a != end(fita); ++a) {
-                cout << static_cast<int>(*a) << " "
-                     << *a << " ";
-            }
-            cout << "\n";
+            // cout << "Valor cabeca\n";
+            // for (auto a = cabeca; a != end(fita); ++a) {
+            //     cout << static_cast<int>(*a) << " "
+            //          << *a << " ";
+            // }
+            // cout << "\n";
 
+            cFita = cCabeca = cStart;
             while (cabeca != std::end(fita))
             {
                 auto r { transicao.processa(cabeca, estado) };
+                LTELA;
+                for (auto &a : fita)
+                   TAPEFORMAT_0(lFita, cFita++, a);
+                TAPEFORMAT_1(lStart, cCabeca, *cabeca);
                 if (!r) {
-                    cout << "* pos na fita\n";
-                    for_each(begin(fita), cabeca + 1, [](auto &a) { cout << a; });
-                    cout << endl;
+                    // cout << "\n* pos na fita\n";
+                    // for_each(begin(fita), cabeca + 1, [](auto &a) { cout << a; });
+                    // cout << endl;
                     if (transicao.estado_final(estado) > 0) {
-                        cout << "ACEITA\n";
+                        INFO_ACEITA("ACEITA");
                         return true;
                     }
                     else {
-                        cout << "REJEITA\n";
+                        INFO_REJEITA("REJEITA");
                         return false;
                     }
                 }
                 estado = get<0>(*r);
+                *cabeca = get<1>(*r);
 
                 if (transicao.estado_final(estado) > 0) {
-                    cout << "* pos na fita\n";
-                    for_each(begin(fita), cabeca+1, [](auto &a) { cout << a; });
-                    cout << endl;
-                    cout << "ACEITA\n";
+                    // cout << "* pos na fita\n";
+                    // for_each(begin(fita), cabeca+1, [](auto &a) { cout << a; });
+                    // cout << endl;
+                    INFO_ACEITA("ACEITA");
                     return true;
                 }
-                if (get<2>(*r) == Move::D) ++cabeca;
-                if (get<2>(*r) == Move::E) --cabeca;
+                if (get<2>(*r) == Move::D) { ++cabeca; ++cCabeca; }
+                if (get<2>(*r) == Move::E) { --cabeca; --cCabeca; }
 
-                cout << "rfirst " << get<0>(*r) << " rsecond " << static_cast<int>(get<1>(*r)) << endl;
-                cout << "*cabeca " << static_cast<int>(*cabeca)  << endl;
-                // getc(stdin);
+                // cout << "rfirst " << get<0>(*r) << " rsecond " << static_cast<int>(get<1>(*r)) << endl;
+                // cout << "*cabeca " << static_cast<int>(*cabeca)  << endl;
+
+                cFita = cStart;
+                CMR1;
             }
 
             cout << "* mt vai rodar soh n sei como ainda\n";

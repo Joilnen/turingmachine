@@ -2,14 +2,18 @@
 #include <fstream>
 #include <sstream>
 #include <set>
+#include <cstdio>
 #include "TuringMachine.h"
 #include "TuringMachine.h"
 #include "Core.h"
 #include "jcurses.h"
 
+using namespace std;
+
 void TuringMachine::init(const char *fileName)
 {
     LTELA;
+    INFO_FILE;
     ifstream ifs;
     string line;
     json j;
@@ -36,13 +40,13 @@ void TuringMachine::init(const char *fileName)
 void TuringMachine::mostraConfig(Core &core)
 {
     LTELA;
-    cout << "** f:" << __func__ << endl;
+    INFO_FILE;
     cout << "* fita\n";
     auto v = core.pegaFita();
     for (auto &a : v)
         cout << a << endl;
 
-    cout << "\n* alfabeto\n";
+    cout << "\n* alfabeto da maquina\n";
     auto alfa = core.pegaAlfabeto();
     for (auto &a : alfa)
         cout << a << endl;
@@ -73,10 +77,6 @@ void TuringMachine::mostraConfig(Core &core)
     for (auto &a : core.pegaEstadosAceitos())
         cout << a << endl;
 
-    cout << "\n* estados rejeitados\n";
-    for (auto &a : core.pegaEstadosRejeitados())
-        cout << a << endl;
-
     cout << "\n* lista move\n";
     for (auto &a : core.pegaListaMove()) {
         if (a == Move::E)
@@ -90,7 +90,7 @@ void TuringMachine::mostraConfig(Core &core)
 void TuringMachine::config(Core &core)
 {
     LTELA;
-    cout << "** f:" << __func__ << endl;
+    INFO_FILE;
     cout << "Contem trancicoes " <<  boolalpha << maquinaConfig.contains("transicoes") << endl;
     cout << "Contem fita " <<  boolalpha << maquinaConfig.contains("fita") << endl;
 
@@ -112,8 +112,13 @@ void TuringMachine::config(Core &core)
     s = maquinaConfig["simbolo_inicio"];
     core.setaSimboloInicial(s.c_str()[0]);
 
-    // seta alfabeto
+    // seta alfabeto da maquina
     for_each (begin(maquinaConfig["alfabeto"]), end(maquinaConfig["alfabeto"]), [&v](auto &a) {
+        // cout << typeid(a).name() << endl;
+        string s = a;
+        v.push_back(s.c_str()[0]);
+    }); 
+    for_each (begin(maquinaConfig["alfacomp"]), end(maquinaConfig["alfacomp"]), [&v](auto &a) {
         // cout << typeid(a).name() << endl;
         string s = a;
         v.push_back(s.c_str()[0]);
@@ -151,18 +156,13 @@ void TuringMachine::config(Core &core)
     });
     core.setaEstadosAceitos(move(vi));
 
-    vi.clear();
-    for_each(begin(maquinaConfig["estados_rejeitados"]), end(maquinaConfig["estados_rejeitados"]), [&vi](auto &a) {
-        vi.push_back(a);
-    });
-    core.setaEstadosRejeitados(move(vi));
     CMR1;
 }
 
 void TuringMachine::roda(Core &core)
 {
     LTELA;
-    cout << "** f:" << __func__ << endl;
+    INFO_FILE;
     std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
     std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
     std::cout << "Consistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;

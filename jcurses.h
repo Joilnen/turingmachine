@@ -20,14 +20,17 @@
 #define S_UNDERL "\033[1m"
 #define S_AZUL "\033[44m\033[37m"
 #define S_VERM "\033[41m\033[37m"
+#define S_VERD "\033[41m\033[37m"
 #define S_INV  "\033[7m"
 #define S_NORM "\033[0m"
-#define S_INFO "\033[24;0H\033[7m"
+#define S_INFO "\033[24;0H"
 #define S_INFO_ST "\033[1;65H"
 #define S_INFO_ST_1 "\033[2;65H"
 #define S_CARD "\033[0;60H"
 #define S_CHKLST "\033[%d;%dH%s\033[0m"
 #define S_CHKLST_DONE "\033[46m\033[30m\033[%d;%dH%s\033[0m"
+#define S_TAPE_0 "\033[%d;%dH%c\033[0m"
+#define S_TAPE_1 "\033[46m\033[30m\033[%d;%dH%c\033[0m"
 #define S_INFO2 "\033[46m\033[30m\033[24;0H"
 #define S_LIST "\033[%d;78H%d"
 #define S_FILEN "\033[0;55H"
@@ -35,16 +38,20 @@
 #define LTELA printf(S_LTELA)
 #define TIPO_DE_TERMINAL TCOLOR
 #define INFO(x) printf("%s%s%s", S_INFO, x, S_NORM)
+#define INFO_ACEITA(x) printf("%s%s%s%s", S_INFO, S_VERD, x, S_NORM)
+#define INFO_REJEITA(x) printf("%s%s%s%s", S_INFO, S_VERM, x, S_NORM)
 #define INFO2(x) printf("%s%s%s", S_INFO2, x, S_NORM)
 #define INFO_ST(x) printf("%s%s%s%s", S_INV, S_INFO_ST, x, S_NORM)
 #define CM printf("%s", m); fflush(stdout); getc(stdin)
 #define CMR(x) printf("%s", S_CMR"q + * tecle enter *"); fflush(stdout); x = getc(stdin)
-#define CMR1 printf("%s", S_CMR"q + * tecle enter *"); fflush(stdout); getc(stdin)
+#define CMR1 printf("%s", S_CMR"    * tecle enter *"); fflush(stdout); getc(stdin)
 #define CKLSITEM(l,c,b,x) \
     if (b) printf(S_CHKLST_DONE, l, c, x); \
     else printf(S_CHKLST, l, c, x)
 #define INFO_FILE printf("%s%s%sf:%s%s", S_INFO_ST, __FILE__, S_INFO_ST_1, __FUNCTION__, S_NORM); fflush(stdout);
 #define INFO_CARD(x) printf("%scardinalidade: %d%s", S_CARD, x, S_NORM)
+#define TAPEFORMAT_0(l,c,x) printf(S_TAPE_0, l, c, x)
+#define TAPEFORMAT_1(l,c,x) printf(S_TAPE_1, l, c, x)
 
 #endif
 
