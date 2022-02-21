@@ -5,7 +5,6 @@
 #include "TuringMachine.h"
 #include "TuringMachine.h"
 #include "Core.h"
-#include "TempData.h"
 #include "jcurses.h"
 
 void TuringMachine::init(const char *fileName)
@@ -26,7 +25,7 @@ void TuringMachine::init(const char *fileName)
         }
         catch (...)
         {
-            cerr << "* maquina.json inconsistente\n";
+            cerr << "* " << fileName << " inconsistente\n";
             exit(-2);
         }
     }
