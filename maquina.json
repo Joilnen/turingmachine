@@ -9,7 +9,7 @@
         {"de" : [0, "a"], "para" : [1, "b"], "move" : "D"}
     ],
     "maximo_estado" : 5,
-    "estados_finais" : [4, 3]
+    "estados_finais" : [ 3]
 }
 
 

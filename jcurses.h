@@ -20,7 +20,7 @@
 #define S_UNDERL "\033[1m"
 #define S_AZUL "\033[44m\033[37m"
 #define S_VERM "\033[41m\033[37m"
-#define S_VERD "\033[41m\033[37m"
+#define S_VERD "\033[42m\033[30m"
 #define S_INV  "\033[7m"
 #define S_NORM "\033[0m"
 #define S_INFO "\033[24;0H"

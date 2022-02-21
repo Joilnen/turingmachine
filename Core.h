@@ -156,8 +156,6 @@ class Core {
                 CMR1;
             }
 
-            cout << "* mt vai rodar soh n sei como ainda\n";
-
             return false;
         }
 };

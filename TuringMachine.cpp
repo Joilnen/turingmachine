@@ -76,14 +76,6 @@ void TuringMachine::mostraConfig(Core &core)
     cout << "\n* estados aceitos\n";
     for (auto &a : core.pegaEstadosAceitos())
         cout << a << endl;
-
-    cout << "\n* lista move\n";
-    for (auto &a : core.pegaListaMove()) {
-        if (a == Move::E)
-            cout << "E" << endl;
-        else if (a == Move::D)
-            cout << "D" << endl;
-    }
     CMR1;
 }
 
@@ -151,7 +143,7 @@ void TuringMachine::config(Core &core)
 
     // 
     vector<unsigned int> vi;
-    for_each(begin(maquinaConfig["estados_aceitos"]), end(maquinaConfig["estados_aceitos"]), [&vi](auto &a) {
+    for_each(begin(maquinaConfig["estados_finais"]), end(maquinaConfig["estados_finais"]), [&vi](auto &a) {
         vi.push_back(a);
     });
     core.setaEstadosAceitos(move(vi));
@@ -161,11 +153,9 @@ void TuringMachine::config(Core &core)
 
 void TuringMachine::roda(Core &core)
 {
-    LTELA;
-    INFO_FILE;
-    std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
-    std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
-    std::cout << "Consistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
+    // std::cout << "Numero de transicoes " << core.pegaTransicao().size() << std::endl;
+    // std::cout << "Numero de dados na fita " << core.pegaFita().size() << std::endl;
+    // std::cout << "Consistente " <<  std::boolalpha << core.checaConsistencia() << std::endl;
 
     core.roda();
     CMR1;
