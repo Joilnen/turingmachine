@@ -1,0 +1,23 @@
+{
+    "fita" : ["K", "1", "1", "0", "1", "1", "1", "B"],
+    "alfabeto" : ["1", "0"],
+    "alfacomp" : ["K", "B"],
+    "simbolo_inicio" : "K",
+    "simbolo_branco" : "B",
+    "transicoes": [
+        {"de" : [0, "K"], "para" : [0, "K"], "move" : "D"},
+
+        {"de" : [0, "1"], "para" : [0, "1"], "move" : "D"},
+        {"de" : [0, "0"], "para" : [1, "1"], "move" : "D"},
+        {"de" : [1, "1"], "para" : [1, "1"], "move" : "D"},
+        {"de" : [1, "B"], "para" : [2, "B"], "move" : "E"},
+        {"de" : [2, "1"], "para" : [3, "0"], "move" : "E"},
+        {"de" : [3, "1"], "para" : [3, "1"], "move" : "E"},
+        {"de" : [3, "K"], "para" : [4, "B"], "move" : "D"}
+    ],
+    "maximo_estado" : 4,
+    "estados_finais" : [4]
+}
+
+
+

@@ -1,6 +1,10 @@
 #ifndef CORE_H
 #define CORE_H
 
+/**
+ * joilnen leite
+ */
+
 #include <algorithm>
 #include <memory>
 #include <iostream>
@@ -93,8 +97,6 @@ class Core {
         void setaEstadosRejeitados(std::initializer_list<unsigned int> il) { transicao.setaEstadosRejeitados(il); }
         void setaEstadosRejeitados(const vector<unsigned int> &il) { transicao.setaEstadosRejeitados(il); }
         vector<unsigned int> &pegaEstadosRejeitados() { return transicao.pegaEstadosRejeitados(); }
-        void adicionaMove(Move m) { transicao.adicionaMove(m); }
-        vector<Move> &pegaListaMove() { return transicao.pegaListaMove(); }
 
         bool roda() {
             int lFita = 10, cFita, cStart, lStart, cCabeca;
@@ -136,16 +138,22 @@ class Core {
                         return false;
                     }
                 }
-                estado = get<0>(*r);
-                *cabeca = get<1>(*r);
+
+                char temp[35];
+                sprintf(temp, "e:%d s:%c", estado, *cabeca);
+                INFO(temp);
 
                 if (transicao.estado_final(estado) > 0) {
                     // cout << "* pos na fita\n";
                     // for_each(begin(fita), cabeca+1, [](auto &a) { cout << a; });
                     // cout << endl;
-                    INFO_ACEITA("ACEITA");
+                    INFO_ACEITA("ACEITA ");
                     return true;
                 }
+
+                estado = get<0>(*r);
+                *cabeca = get<1>(*r);
+
                 if (get<2>(*r) == Move::D) { ++cabeca; ++cCabeca; }
                 if (get<2>(*r) == Move::E) { --cabeca; --cCabeca; }
 
@@ -154,6 +162,20 @@ class Core {
 
                 cFita = cStart;
                 CMR1;
+            }
+
+            if (transicao.estado_final(estado) > 0) {
+                // cout << "* pos na fita\n";
+                // for_each(begin(fita), cabeca+1, [](auto &a) { cout << a; });
+                // cout << endl;
+                INFO_ACEITA("ACEITA ");
+                CMR1;
+                return true;
+            }
+            else {
+                INFO_REJEITA("REJEITA");
+                CMR1;
+                return false;
             }
 
             return false;

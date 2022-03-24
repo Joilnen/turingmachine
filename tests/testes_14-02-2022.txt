@@ -42,7 +42,7 @@ Teste 2: M = ({q0, q1, q2, q3, q4, q5},  {a, b, c},  {a, b, c, x, y, z, B}, δ, 
 16-  δ(q4, B) = (q5, B, R)
 
 
-
+                                   q5 q6  q7   q8
 Teste 3: M = ({q0, q1, q2, q3, q4, qf,qv, q>=, q< }, {1,0}, {1,0,x,y, B}, δ, q0,  { q>=, q< }) 
 
 Entrada: dois inteiros positivos x e y, onde cada inteiro é representado por uma cadeia de 1’s, cujo tamanho é o valor do inteiro. Por exemplo, 4 é representado por 1111.
@@ -60,10 +60,10 @@ Para indicar que há dois inteiros na fita, um 0 separa as duas sequências de 1
 10- δ(q3, 1) = (q3, 1, L),
 11-  δ(q3, x) = (q0, x, R),
 12- δ(q4, y) = (q4, y, R),
-13- δ(q4, 1) = (qf, 1, L),
+13- δ(q4, 1) = (qf, 1, L),   f5  v6  q>7 q<8
 14- δ(q4, B) = (qv, B, L),
 15- δ(qf, 0) = (qf, 0, L),
-16- δ(qf, y) = (qf, 1, L),
+16- δ(qf, y) = (qf, 1, L),  
 17- δ(qf, x) = (qf, 1, L),
 18- δ(qf, B) = (q<, B, R),
 19- δ(qv, y) = (qv, 1, L),

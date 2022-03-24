@@ -1,6 +1,10 @@
 #ifndef TURING_MACHINE_H
 #define TURING_MACHINE_H
 
+/**
+ * joilnen leite
+ */
+
 #include <string>
 #include <sstream>
 #include <map>

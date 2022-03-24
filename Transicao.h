@@ -1,6 +1,10 @@
 #ifndef Transicao_H
 #define Transicao_H
 
+/**
+ * joilnen leite
+ */
+
 #include <map>
 #include <string>
 #include <algorithm>
@@ -15,7 +19,6 @@ enum class Move {D, E};
 class Transicao : public 
         map<pair<unsigned int, char>, tuple<unsigned int, char, Move> > {
     vector<unsigned int> estadosAceitos, estadosRejeitados;
-    vector<Move> listaMove;
     unsigned int inicial, maxEstado;
     vector<char> *alfa;
     int aceito;
@@ -78,9 +81,6 @@ class Transicao : public
         void limpa() {
             this->clear();
         }
-
-        void adicionaMove(Move m) { listaMove.push_back(m); }
-        std::vector<Move> &pegaListaMove() { return listaMove; }
 };
 
 #endif

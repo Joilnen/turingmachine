@@ -1,0 +1,38 @@
+" Press ? for help
+
+.. (up a dir)
+/home/joilnen/turing/
+▾ [  ]tests/
+  ▸ [  ]imnodes/
+    [  ]testes_14-02-2022.txt
+    [  ]testes_15-02-2022.txt
+    [  ]Trab1_MT_Testes_14-02-2021.odt
+    [  ]Trab1_MT_Testes_15-02-2021.odt
+    [  ]turing_machine.cpp
+    [  ]turing_machine.h
+    [  ]turing_machine.txt
+  [  ]Cabeca.h
+  [  ]Core.h
+  [  ]Fita.h
+  [  ]jcurses.h
+  [  ]json.hpp
+  [  ]main.cpp
+  [  ]main.o
+  [  ]Makefile
+  [  ]MakefileWeb
+  [  ]maquina.json
+  [  ]mt*
+  [  ]node_editor.h
+  [  ]README.md
+  [  ]saida.txt
+  [  ]teste_01_14.json
+  [  ]teste_01_15.json
+  [  ]teste_01_15_entra_em_loop.json
+  [  ]teste_02_14.json
+  [  ]teste_02_15.json
+  [  ]teste_03_14.json
+  [  ]teste_03_15.json
+  [  ]Transicao.h
+  [  ]TuringMachine.cpp
+  [  ]TuringMachine.h
+  [  ]TuringMachine.o

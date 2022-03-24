@@ -1,6 +1,10 @@
 #ifndef FITA_H
 #define FITA_H
 
+/**
+ * joilnen leite
+ */
+
 #include <iostream>
 #include <vector>
 
@@ -11,7 +15,7 @@ template <typename T>
 class Fita : public std::vector<T> {
     T simbInicial;
     public:
-        Fita() {} 
+        Fita() {  } 
         ~Fita() { }
         void impSimbIni() {
             if (simbInicial == 0x01)

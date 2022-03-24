@@ -1,6 +1,10 @@
 #include "TuringMachine.h"
 #include "Core.h"
 
+/**
+ * joilnen leite
+ */
+
 int main(int argc, char *argv[])
 {
     auto core = Core::getInstance();

@@ -1,5 +1,5 @@
 {
-    "fita" : ["K", "a", "b", "a", "a", "B"],
+    "fita" : ["K", "a", "a", "a", "a", "b", "b", "b", "b", "B"],
     "alfabeto" : ["a", "b"],
     "alfacomp" : ["x", "y", "K" ,"B"],
     "simbolo_inicio" : "K",
@@ -9,10 +9,10 @@
         {"de" : [0, "a"], "para" : [1, "x"], "move" : "D"},
         {"de" : [1, "a"], "para" : [1, "a"], "move" : "D"},
         {"de" : [1, "y"], "para" : [1, "y"], "move" : "D"},
-        {"de" : [1, "b"], "para" : [2, "y"], "move" : "D"},
+        {"de" : [1, "b"], "para" : [2, "y"], "move" : "E"},
         {"de" : [2, "y"], "para" : [2, "y"], "move" : "E"},
         {"de" : [2, "a"], "para" : [2, "a"], "move" : "E"},
-        {"de" : [2, "x"], "para" : [0, "a"], "move" : "D"},
+        {"de" : [2, "x"], "para" : [0, "x"], "move" : "D"},
         {"de" : [0, "y"], "para" : [3, "y"], "move" : "D"},
         {"de" : [3, "y"], "para" : [3, "y"], "move" : "D"},
         {"de" : [3, "B"], "para" : [4, "B"], "move" : "D"}

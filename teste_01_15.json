@@ -1,0 +1,43 @@
+{
+    "fita" : ["K", "b", "a", "a", "b", "b", "b", "B"],
+    "alfabeto" : ["a", "b", "c"],
+    "alfacomp" : ["x", "y", "K", "B"],
+    "simbolo_inicio" : "K",
+    "simbolo_branco" : "B",
+    "transicoes": [
+        {"de" : [0, "K"], "para" : [0, "K"], "move" : "D"},
+
+        {"de" : [0, "a"], "para" : [1, "x"], "move" : "D"},
+        {"de" : [1, "a"], "para" : [1, "a"], "move" : "D"},
+        {"de" : [1, "b"], "para" : [1, "b"], "move" : "D"},
+        {"de" : [1, "c"], "para" : [1, "c"], "move" : "D"},
+        {"de" : [1, "B"], "para" : [3, "B"], "move" : "E"},
+        {"de" : [1, "x"], "para" : [3, "x"], "move" : "E"},
+        {"de" : [1, "y"], "para" : [3, "y"], "move" : "E"},
+        {"de" : [3, "a"], "para" : [5, "x"], "move" : "E"},
+
+        {"de" : [0, "b"], "para" : [2, "y"], "move" : "D"},
+        {"de" : [2, "a"], "para" : [2, "a"], "move" : "D"},
+        {"de" : [2, "b"], "para" : [2, "b"], "move" : "D"},
+        {"de" : [2, "c"], "para" : [2, "c"], "move" : "D"},
+        {"de" : [2, "B"], "para" : [4, "B"], "move" : "E"},
+        {"de" : [4, "b"], "para" : [5, "y"], "move" : "E"},
+
+        {"de" : [0, "c"], "para" : [6, "c"], "move" : "D"},
+        {"de" : [6, "x"], "para" : [6, "x"], "move" : "D"},
+        {"de" : [6, "y"], "para" : [6, "y"], "move" : "D"},
+        {"de" : [6, "B"], "para" : [7, "B"], "move" : "E"},
+
+        {"de" : [5, "a"], "para" : [5, "a"], "move" : "E"},
+        {"de" : [5, "b"], "para" : [5, "b"], "move" : "E"},
+        {"de" : [5, "c"], "para" : [5, "c"], "move" : "E"},
+        {"de" : [5, "x"], "para" : [5, "x"], "move" : "D"},
+
+        {"de" : [5, "y"], "para" : [0, "y"], "move" : "D"}
+    ],
+    "maximo_estado" : 7,
+    "estados_finais" : [7]
+}
+
+
+
